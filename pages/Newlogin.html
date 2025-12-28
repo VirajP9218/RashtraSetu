@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RashtraSetu | Citizen Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+body{
+    background:#0f1419;
+    color:#e7e9ea;
+    font-family:"Segoe UI",sans-serif;
+}
+
+/* HEADER */
+header{
+    background:#000;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+header span{color:#1d9bf0}
+
+/* PROFILE */
+.profile-wrapper{max-width:1100px;margin:30px auto;}
+.profile-card{
+    background:#000;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid #2f3336;
+}
+
+/* COVER */
+.profile-cover{
+    height:200px;
+    background:linear-gradient(135deg,#0A2647,#144272);
+}
+
+/* PIC */
+.profile-pic{
+    width:140px;height:140px;
+    border-radius:50%;
+    border:5px solid #000;
+    margin-top:-70px;
+    margin-left:30px;
+    object-fit:cover;
+}
+
+/* BODY */
+.profile-body{padding:20px 30px 30px}
+.profile-name{font-size:24px;font-weight:600}
+.profile-h
+
+.profile-meta{color:#71767b}
+.verify-badge{
+    background:#1d9bf0;
+    color:#fff;
+    border-radius:20px;
+    padding:3px 10px;
+    font-size:13px;
+    margin-left:8px;
+}
+
+/* STATS */
+.profile-stats{
+    display:flex;
+    gap:30px;
+    margin-top:15px;
+}
+.stat strong{font-size:16px}
+
+/* SECTION */
+.section{
+    background:#000;
+    border:1px solid #2f3336;
+    border-radius:16px;
+    padding:20px;
+    margin-top:20px;
+}
+
+/* CARDS */
+.impact-card{
+    background:#0f1419;
+    border:1px solid #2f3336;
+    border-radius:14px;
+    padding:20px;
+    height:100%;
+}
+.impact-card i{
+    font-size:28px;
+    color:#1d9bf0;
+    margin-bottom:10px;
+}
+
+/* FOOTER */
+.profile-footer{
+    text-align:center;
+    font-size:13px;
+    color:#71767b;
+    padding:30px 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h4>Rashtra<span>Setu</span></h4>
+<button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">
+Edit Profile
+</button>
+</header>
+
+<div class="profile-wrapper">
+
+<!-- PROFILE HEADER -->
+<div class="profile-card">
+<div class="profile-cover"></div>
+<img id="profilePic" class="profile-pic" src="https://via.placeholder.com/140">
+
+<div class="profile-body">
+<div class="d-flex justify-content-between align-items-start">
+<div>
+<div class="profile-name">
+<span id="viewName">Viraj Patil</span>
+<span class="verify-badge">Verified Citizen</span>
+</div>
+<div class="profile-meta">@citizen • <span id="viewArea">Pune</span></div>
+<div class="profile-meta mt-1">
+<i class="fa-solid fa-location-dot"></i> <span id="viewWard">Ward</span>
+</div>
+</div>
+</div>
+
+<div class="profile-stats">
+<div class="stat"><strong>5</strong> Projects</div>
+<div class="stat"><strong>18</strong> Issues Raised</div>
+<div class="stat"><strong>240</strong> Engagements</div>
+</div>
+</div>
+</div>
+
+<!-- IMPACT SECTION -->
+<div class="section">
+<h5>Citizen Impact</h5>
+<div class="row g-3 mt-2">
+<div class="col-md-4">
+<div class="impact-card">
+<i class="fa-solid fa-road"></i>
+<h6>Infrastructure Feedback</h6>
+<p>Roads, drainage, footpaths and local connectivity improvements reported.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="impact-card">
+<i class="fa-solid fa-hand-holding-water"></i>
+<h6>Public Utilities</h6>
+<p>Water supply, sanitation, waste management and civic cleanliness issues.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="impact-card">
+<i class="fa-solid fa-people-group"></i>
+<h6>Community Participation</h6>
+<p>Ward meetings, citizen polls and collaborative governance inputs.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- AREA FOCUS -->
+<div class="section">
+<h5>Area Governance Focus</h5>
+<p id="areaFocusText" class="text-secondary"></p>
+</div>
+
+<!-- PROFILE FOOTER -->
+<div class="profile-footer">
+RashtraSetu is a citizen-led governance bridge.<br>
+Profiles reflect civic participation, not political affiliation.
+</div>
+
+</div>
+
+<!-- EDIT MODAL (unchanged logic, refined UI) -->
+<div class="modal fade" id="editModal">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content bg-dark text-light">
+
+<div class="modal-header border-secondary">
+<h5>Edit Profile</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+<div class="row g-4">
+
+<div class="col-md-4">
+<div class="p-3 border rounded text-secondary">
+<h6>Guidelines</h6>
+<ul>
+<li>Use real identity</li>
+<li>Accurate ward info</li>
+<li>Profile used for governance</li>
+<li>No misleading content</li>
+</ul>
+</div>
+</div>
+
+<div class="col-md-8">
+<input class="form-control mb-2" id="name" placeholder="Full Name">
+<input class="form-control mb-2" id="ward" placeholder="Ward">
+<label class="form-label">Profile Photo</label>
+<input type="file" class="form-control mb-3" id="picUpload">
+<button class="btn btn-primary" onclick="saveProfile()">Save</button>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const areaInfo={
+"411018":"High-density civic interaction zone with infrastructure load",
+"411019":"Old city redevelopment and traffic optimization focus",
+"411027":"Residential planning, utilities and public safety"
+};
+
+function saveProfile(){
+ viewName.innerText=name.value;
+ viewWard.innerText=ward.value;
+ localStorage.setItem("profile",JSON.stringify({
+  name:name.value,ward:ward.value,pic:profilePic.src
+ }));
+ bootstrap.Modal.getInstance(editModal).hide();
+}
+
+picUpload.onchange=e=>{
+ let r=new FileReader();
+ r.onload=()=>profilePic.src=r.result;
+ r.readAsDataURL(e.target.files[0]);
+};
+
+document.getElementById("areaFocusText").innerText=
+areaInfo["411018"];
+</script>
+
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Civic Home — People's Voice & Power Transparency</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ===== SIDEBAR + NAVBAR (kept as you had) ===== */
+    body { margin: 0; font-family: "Segoe UI", sans-serif; }
+    .sidebar { width: 240px; height: 100vh; background: #0A2647; color: #fff; position: fixed; top: 0; left: 0; padding-top: 25px; overflow-y: auto; z-index: 1000; }
+    .sidebar h3 { text-align: center; color: #FFDE59; margin-bottom: 25px; font-size: 22px; font-weight: bold; }
+    .menu-item { color: #fff; padding: 12px 20px; display: flex; align-items: center; text-decoration: none; border-radius: 5px; margin: 2px 10px; cursor: pointer; }
+    .menu-item i { margin-right: 10px; }
+    .menu-item:hover, .menu-item.active { background: #144272; }
+    .gov-navbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; background: #0A2647; padding: 6px 20px; border-bottom: 1px solid #ddd; margin-left: 240px; z-index: 900; position: relative; }
+    .gov-left img { height: 85px; width: auto; }
+    .gov-center { text-align: center; flex: 1; }
+    .gov-center h5 { margin: 0; font-size: 22px; font-weight: 900; color: #ffffff; }
+    .gov-center p { margin: 0; font-size: 13px; font-weight: 600; color: #a8dadc; }
+    .gov-right { display: flex; align-items: center; gap: 25px; }
+    .official { text-align: center; font-size: 12px; }
+    .official img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff; }
+    .official-name { font-weight: 700; margin-top: 5px; color: #ffcc00; }
+    .official-title { font-size: 11px; color: #e0e0e0; }
+    .page-content { margin-left: 240px; padding: 20px; min-height: 100vh; background: #f4f6f8; }
+
+    /* ===== APP STYLES (kept & adjusted) ===== */
+    :root { --accent1: #063970; --accent2: #021f4d; --light-bg: #f4f6f8; --card-bg: #ffffff; --text-dark: #071033; }
+    body { background: var(--light-bg); color: var(--text-dark); }
+    .app-wrap { max-width: 920px; margin: 28px auto; padding: 18px; }
+    h1.app-title { text-align: center; margin-bottom: 18px; font-weight: 700; color: var(--text-dark); }
+
+    .top-tabs { display: flex; gap: 12px; justify-content: center; padding: 12px; background: #e9ecef; border-radius: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+    .tab { padding: 10px 18px; font-size: 1rem; font-weight: 700; cursor: pointer; color: #6c757d; border-radius: 999px; user-select: none; transition: 0.18s; }
+    .tab:hover { color: #071033; transform: translateY(-3px); }
+    .tab.active { color: #ffffff; background: linear-gradient(90deg, var(--accent1), var(--accent2)); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); }
+
+    .section-wrap { margin-top: 8px; }
+    .post-card { background: var(--card-bg); color: var(--text-dark); border-radius: 12px; padding: 14px; margin: 14px 0; border: 1px solid #e6eaee; box-shadow: 0 6px 16px rgba(8, 12, 20, 0.04); transition: transform .12s, box-shadow .12s; }
+    .post-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(8, 12, 20, 0.06); }
+    .post-header { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+    .avatar { width: 48px; height: 48px; border-radius: 50%; background: #6c757d; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; flex: 0 0 48px; }
+    .post-meta small { color: #6c757d; }
+    .post-body { margin-top: 6px; line-height: 1.45; color: #222; }
+    .post-actions { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+    /* action buttons: make dark blue active style */
+    .action-btn { background: #063970; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; color: #fff; transition: transform .12s, background .12s; display: flex; gap: 8px; align-items: center; font-weight: 600; }
+    .action-btn:hover { transform: translateY(-2px); background: #021f4d; }
+
+    .meta-badge { background: #f0f2f5; padding: 6px 10px; border-radius: 8px; color: #495057; font-weight: 700; font-size: 0.9rem; }
+
+    .add-btn { position: fixed; right: 28px; bottom: 28px; width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 34px; border: none; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18); cursor: pointer; transition: transform .18s; z-index: 2000; }
+    .add-btn:hover { transform: scale(1.06) rotate(6deg); }
+
+    .image-gallery { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 6px; }
+    .image-gallery img { width: 110px; height: 86px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 1px solid #e6eaee; flex: 0 0 auto; }
+
+    /* Lightbox */
+    #lightboxModal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.82); z-index: 4000; flex-direction: column; padding: 20px; }
+    #lightboxModal.show { display: flex; }
+    #lightboxModal img { max-width: 92%; max-height: 78%; border-radius: 10px; }
+    .lightbox-close { position: absolute; top: 18px; right: 22px; font-size: 26px; cursor: pointer; color: #fff; padding: 6px 10px; border-radius: 8px; background: rgba(0, 0, 0, 0.25); z-index: 4100; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 34px; cursor: pointer; color: #fff; padding: 10px; border-radius: 50%; background: rgba(0, 0, 0, 0.28); z-index: 4100; }
+    .light-prev { left: 18px; }
+    .light-next { right: 18px; }
+
+    .post-comments { margin-top: 8px; font-size: 0.95rem; color: #3b3b3b; }
+    .comment-item { margin-top: 6px; padding: 8px; background: #f8f9fa; border-radius: 8px; }
+    .empty-hint { text-align: center; color: #6c757d; padding: 28px 0; }
+
+    /* ensure bootstrap backdrop sits under sidebar & above content but below modals */
+    .modal-backdrop { z-index: 3500 !important; }
+    .modal { z-index: 3600 !important; }
+
+    @media (max-width: 560px) {
+      .app-wrap { padding: 12px; }
+      .image-gallery img { width: 90px; height: 70px; }
+    }
+  </style>
+</head>
+
+<body>
+
+ <!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>RashtraSetu</h3>
+  <a href="index.html" class="menu-item active"><i class="fa-solid fa-house"></i>Home</a>
+  <a href="pages/search.html" class="menu-item"><i class="fa-solid fa-search"></i>Search</a>
+  <a href="pages/explore.html" class="menu-item"><i class="fa-solid fa-compass"></i>Explore</a>
+  <a href="pages/add-issue.html" class="menu-item"><i class="fa-solid fa-plus-circle"></i>Add Issues</a>
+  <a href="pages/janadicar-final.html" class="menu-item"><i class="fa-solid fa-gavel"></i>Janadhikar</a>
+  <a href="pages/about_our_leaders.html" class="menu-item"><i class="fa-solid fa-users"></i>About Our Leaders</a>
+  <a href="pages/politician_property.html" class="menu-item"><i class="fa-solid fa-user-tie"></i>Politician Properties</a>
+  <a href="pages/updates.html" class="menu-item"><i class="fa-solid fa-bell"></i>Updates</a>
+  <a href="pages/profile.html" class="menu-item"><i class="fa-solid fa-user"></i>Profile</a>
+  <a href="#" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+
+
+  <!-- NAVBAR -->
+  <div class="gov-navbar">
+    <div class="gov-left"><img src="images/weblogo3.png" alt="logo"></div>
+    <div class="gov-center"><h5>RASHTRASETU</h5><p>THE BRIDGE BETWEEN NATION AND CITIZENS</p></div>
+    <div class="gov-right">
+      <div class="official"><img src="images/fadanvis.jpeg" alt=""><div class="official-name">Devendra Fadnavis</div><div class="official-title">CM</div></div>
+      <div class="official"><img src="images/shinde.jpeg" alt=""><div class="official-name">Eknath Shinde</div><div class="official-title">Dy CM</div></div>
+      <div class="official"><img src="images/pawar.jpeg" alt=""><div class="official-name">Ajit Pawar</div><div class="official-title">Dy CM</div></div>
+      <div class="official"><img src="images/shelar.jpeg" alt=""><div class="official-name">Ashish Shelar</div><div class="official-title">IT Minister</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="page-content">
+    <div class="app-wrap">
+      <h1 class="app-title">Civic Home — People’s Voice & Power Transparency</h1>
+
+      <div class="top-tabs" id="tabsWrap" role="tablist" aria-label="Sections">
+        <div class="tab active" data-tab="voice" role="tab" tabindex="0">People's Voice</div>
+        <div class="tab" data-tab="power" role="tab" tabindex="0">Power Transparency</div>
+      </div>
+
+      <div class="section-wrap">
+
+        <!-- PEOPLE VOICE -->
+        <div id="voiceSection" data-section="voice">
+          <div class="post-card" data-id="seed-1">
+            <div class="post-header">
+              <div class="avatar">LR</div>
+              <div style="flex:1">
+                <div style="font-weight:700">Local Resident</div>
+                <div class="post-meta"><small>2 hours ago · <span class="meta-badge">Road</span></small></div>
+              </div>
+            </div>
+            <div class="post-body">
+              Garbage collection in our lane missed for 4 days — requesting pickup and spray disinfection.
+            </div>
+            <div class="post-actions">
+              <button class="action-btn like-btn"><i class="fa-regular fa-heart"></i> <span>Like</span></button>
+              <button class="action-btn comment-btn"><i class="fa-regular fa-comment"></i> <span>Comment</span></button>
+              <button class="action-btn share-btn"><i class="fa-solid fa-share"></i> <span>Share</span></button>
+            </div>
+            <div class="post-comments"></div>
+          </div>
+        </div>
+
+        <!-- POWER TRANSPARENCY -->
+        <div id="powerSection" data-section="power" style="display:none;">
+          <div class="post-card" data-id="seed-2">
+            <div class="post-header">
+              <div class="avatar" style="background:#fd7e14">WO</div>
+              <div style="flex:1">
+                <div style="font-weight:700">Ward Office</div>
+                <div class="post-meta"><small>Yesterday · <span class="meta-badge">Budget ₹12,50,000</span></small></div>
+              </div>
+            </div>
+            <div class="post-body">
+              Park renovation contract: benches, lighting, grass replacement. Contractors and estimates published.
+            </div>
+            <div class="post-actions">
+              <button class="action-btn like-btn"><i class="fa-regular fa-heart"></i> <span>Like</span></button>
+              <button class="action-btn comment-btn"><i class="fa-regular fa-comment"></i> <span>Comment</span></button>
+              <button class="action-btn share-btn"><i class="fa-solid fa-share"></i> <span>Share</span></button>
+            </div>
+            <div class="post-comments"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Add Button -->
+  <button class="add-btn" id="openPostBtn" aria-label="Create post">+</button>
+
+  <!-- Role Modal -->
+  <div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content text-center p-3">
+        <h5>Who are you today?</h5>
+        <p style="color:#495057;">Choose a role so your posts go to the right place.</p>
+        <div class="d-flex gap-2 justify-content-center mt-2">
+          <button class="btn btn-primary" id="chooseCitizen">Citizen</button>
+          <button class="btn btn-primary" id="chooseLeader">Leader / Official</button>
+        </div>
+        <div class="mt-3"><button class="btn btn-link" id="roleCancelBtn">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Modal -->
+  <div class="modal fade" id="postModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Post</h5>
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="postForm">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input class="form-control" id="postTitle" placeholder="Short headline (optional)">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" id="postDesc" rows="4" placeholder="Describe the issue or announcement..."></textarea>
+            </div>
+
+            <div class="row g-2">
+              <div class="col-md-6 mb-2">
+                <label class="form-label">Category</label>
+                <select class="form-select" id="postCategory">
+                  <option>Road</option>
+                  <option>Garbage</option>
+                  <option>Electricity</option>
+                  <option>Drainage</option>
+                  <option>Health</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-2">
+                <label class="form-label">Area / Ward</label>
+                <input class="form-control" id="postArea" placeholder="Ward or locality">
+              </div>
+            </div>
+
+            <div class="row g-2 mt-2">
+              <div class="col-md-6 mb-2">
+                <label class="form-label">Date</label>
+                <input class="form-control" id="postDate" type="date">
+              </div>
+              <div class="col-md-6 mb-2">
+                <label class="form-label">Time</label>
+                <input class="form-control" id="postTime" type="time">
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label class="form-label">Images (optional)</label>
+              <input class="form-control" id="postFiles" type="file" accept="image/*" multiple>
+              <div id="previewRow" class="image-gallery"></div>
+            </div>
+
+            <input type="hidden" id="autoSection" value="voice">
+            <input type="hidden" id="posterRole" value="Citizen">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="submitPostBtn">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightboxModal" aria-hidden="true">
+    <div class="lightbox-close" id="lightClose" title="Close">&times;</div>
+    <div class="lightbox-nav light-prev" id="lightPrev" title="Previous">&lt;</div>
+    <img id="lightboxImage" alt="enlarged image">
+    <div class="lightbox-nav light-next" id="lightNext" title="Next">&gt;</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ---------- Utilities ---------- */
+    const qs = s => document.querySelector(s);
+    const qsa = s => Array.from(document.querySelectorAll(s));
+
+    /* ---------- Tabs ---------- */
+    const tabsWrap = qs('#tabsWrap');
+    tabsWrap.addEventListener('click', (e) => {
+      const tab = e.target.closest('.tab');
+      if (!tab) return;
+      activateTab(tab.dataset.tab);
+    });
+    tabsWrap.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const tab = e.target.closest('.tab');
+        if (!tab) return;
+        activateTab(tab.dataset.tab);
+        e.preventDefault();
+      }
+    });
+    function activateTab(name) {
+      qsa('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+      qs('#voiceSection').style.display = name === 'voice' ? '' : 'none';
+      qs('#powerSection').style.display = name === 'power' ? '' : 'none';
+      // set autoSection so new posts default to the open tab unless poster role decides otherwise
+      qs('#autoSection').value = name === 'power' ? 'power' : 'voice';
+    }
+
+    /* ---------- Bootstrap modal instances (backdrop & z-index handled via CSS above) ---------- */
+    const roleModalEl = qs('#roleModal');
+    const postModalEl = qs('#postModal');
+    const roleModal = new bootstrap.Modal(roleModalEl, { backdrop: true });
+    const postModal = new bootstrap.Modal(postModalEl, { backdrop: true });
+
+    /* ---------- Add button -> open role modal ---------- */
+    const openPostBtn = qs('#openPostBtn');
+    openPostBtn.addEventListener('click', () => {
+      // show role selection
+      roleModal.show();
+    });
+
+    /* ---------- Role selection ---------- */
+    const chooseCitizen = qs('#chooseCitizen');
+    const chooseLeader = qs('#chooseLeader');
+    const roleCancelBtn = qs('#roleCancelBtn');
+
+    chooseCitizen.addEventListener('click', () => {
+      qs('#posterRole').value = 'Citizen';
+      // default to voice for citizen
+      qs('#autoSection').value = 'voice';
+      roleModal.hide();
+      // small timeout so backdrop transitions don't overlap
+      setTimeout(openPostModal, 220);
+    });
+
+    chooseLeader.addEventListener('click', () => {
+      qs('#posterRole').value = 'Leader';
+      // leaders likely prefer power transparency by default
+      qs('#autoSection').value = 'power';
+      roleModal.hide();
+      setTimeout(openPostModal, 220);
+    });
+
+    roleCancelBtn.addEventListener('click', () => roleModal.hide());
+
+    function openPostModal() {
+      // set default date/time
+      const now = new Date();
+      const isoDate = now.toISOString().slice(0, 10);
+      qs('#postDate').value = isoDate;
+      const hh = now.getHours().toString().padStart(2, '0');
+      const mm = now.getMinutes().toString().padStart(2, '0');
+      qs('#postTime').value = hh + ':' + mm;
+
+      // clear previous preview & form content if any
+      qs('#previewRow').innerHTML = '';
+      qs('#postFiles').value = '';
+      qs('#postTitle').value = '';
+      qs('#postDesc').value = '';
+      qs('#postCategory').selectedIndex = 0;
+      qs('#postArea').value = '';
+      postModal.show();
+    }
+
+    /* ---------- Image preview inside modal ---------- */
+    const fileInput = qs('#postFiles');
+    const previewRow = qs('#previewRow');
+
+    fileInput.addEventListener('change', (ev) => {
+      previewRow.innerHTML = '';
+      const files = Array.from(ev.target.files).slice(0, 6); // limit thumbnails
+      files.forEach((f, idx) => {
+        if (!f.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = f.name;
+          img.dataset.index = idx;
+          img.addEventListener('click', () => openLightboxFromBase(img.src));
+          previewRow.appendChild(img);
+        };
+        reader.readAsDataURL(f);
+      });
+    });
+
+    /* ---------- Submit post: build post card and append ---------- */
+    const submitPostBtn = qs('#submitPostBtn');
+    submitPostBtn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const title = qs('#postTitle').value.trim();
+      const desc = qs('#postDesc').value.trim();
+      const category = qs('#postCategory').value;
+      const area = qs('#postArea').value.trim();
+      const date = qs('#postDate').value;
+      const time = qs('#postTime').value;
+      // autoSection may be set by role or current tab
+      const section = qs('#autoSection').value || 'voice';
+      const role = qs('#posterRole').value || 'Citizen';
+
+      if (!desc && !title) {
+        alert('Please enter a title or description for the post.');
+        return;
+      }
+
+      // Create card DOM (keep structure same as seed)
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.dataset.id = 'post-' + Date.now();
+
+      const avatarText = role === 'Leader' ? 'LD' : (area ? area.slice(0, 2).toUpperCase() : 'PR');
+
+      const headerHTML = `
+        <div class="post-header">
+          <div class="avatar">${escapeHtml(avatarText)}</div>
+          <div style="flex:1">
+            <div style="font-weight:700">${escapeHtml(role === 'Leader' ? 'Leader / Official' : 'Local Resident')}</div>
+            <div class="post-meta"><small>${formatRelativeDate(date, time)} · <span class="meta-badge">${escapeHtml(category)}</span></small></div>
+          </div>
+        </div>
+      `;
+      const bodyHTML = `
+        <div class="post-body">
+          ${title ? '<strong>' + escapeHtml(title) + '</strong><br>' : '' }
+          ${desc ? '<div style="margin-top:6px;">' + nl2br(escapeHtml(desc)) + '</div>' : '' }
+        </div>
+      `;
+
+      card.innerHTML = headerHTML + bodyHTML;
+
+      // images (read files and append as thumbs)
+      const files = Array.from(fileInput.files || []);
+      if (files.length) {
+        const gallery = document.createElement('div');
+        gallery.className = 'image-gallery';
+        card.appendChild(gallery);
+        files.forEach((f, idx) => {
+          if (!f.type.startsWith('image/')) return;
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = f.name || ('image-' + idx);
+            img.loading = 'lazy';
+            img.addEventListener('click', () => openLightboxFromBase(img.src));
+            gallery.appendChild(img);
+          };
+          reader.readAsDataURL(f);
+        });
+      }
+
+      // actions
+      const actionsWrap = document.createElement('div');
+      actionsWrap.className = 'post-actions';
+      actionsWrap.innerHTML = `
+        <button class="action-btn like-btn"><i class="fa-regular fa-heart"></i> <span>Like</span></button>
+        <button class="action-btn comment-btn"><i class="fa-regular fa-comment"></i> <span>Comment</span></button>
+        <button class="action-btn share-btn"><i class="fa-solid fa-share"></i> <span>Share</span></button>
+      `;
+      card.appendChild(actionsWrap);
+
+      // comments container
+      const comments = document.createElement('div');
+      comments.className = 'post-comments';
+      card.appendChild(comments);
+
+      // attach to correct section
+      const target = qs(section === 'power' ? '#powerSection' : '#voiceSection');
+      target.insertBefore(card, target.firstChild);
+
+      // hook actions on this card
+      attachCardEvents(card);
+
+      // close modal and reset form
+      postModal.hide();
+      qs('#postForm').reset();
+      previewRow.innerHTML = '';
+      fileInput.value = '';
+    });
+
+    /* ---------- Attach actions for seed cards and dynamically added cards ---------- */
+    function attachCardEvents(card) {
+      const likeBtn = card.querySelector('.like-btn');
+      const commentBtn = card.querySelector('.comment-btn');
+      const shareBtn = card.querySelector('.share-btn');
+      const commentsWrap = card.querySelector('.post-comments');
+
+      // Like toggle
+      likeBtn && likeBtn.addEventListener('click', () => {
+        const icon = likeBtn.querySelector('i');
+        if (!icon) return;
+        const liked = icon.classList.contains('fa-solid');
+        icon.classList.toggle('fa-solid', !liked);
+        icon.classList.toggle('fa-regular', liked);
+        likeBtn.querySelector('span').textContent = liked ? 'Like' : 'Liked';
+      });
+
+      // Comment: simple prompt + append
+      commentBtn && commentBtn.addEventListener('click', () => {
+        const c = prompt('Write your comment (simple):');
+        if (!c) return;
+        const item = document.createElement('div');
+        item.className = 'comment-item';
+        const now = new Date();
+        item.innerHTML = `<strong>You</strong> · <small style="color:#6c757d">${now.toLocaleString()}</small><div style="margin-top:6px">${escapeHtml(c)}</div>`;
+        commentsWrap.insertBefore(item, commentsWrap.firstChild);
+      });
+
+      // Share: try Web Share API, fallback to copy text
+      shareBtn && shareBtn.addEventListener('click', async () => {
+        const bodyText = card.querySelector('.post-body')?.innerText || 'Check this post';
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: document.title, text: bodyText });
+          } catch (err) {
+            // user cancelled or unsupported
+          }
+        } else {
+          try {
+            await navigator.clipboard.writeText(bodyText);
+            alert('Post text copied to clipboard.');
+          } catch (err) {
+            alert('Share not available. You can copy manually: ' + bodyText);
+          }
+        }
+      });
+    }
+
+    // attach for existing seed cards
+    qsa('.post-card').forEach(card => attachCardEvents(card));
+
+    /* ---------- Lightbox ---------- */
+    const lightboxModal = qs('#lightboxModal');
+    const lightboxImage = qs('#lightboxImage');
+    const lightPrev = qs('#lightPrev');
+    const lightNext = qs('#lightNext');
+    const lightClose = qs('#lightClose');
+
+    let lightImages = []; // array of src strings for current gallery
+    let currentLightIndex = 0;
+
+    function openLightboxFromBase(src) {
+      // find parent gallery images; fallback to all gallery images
+      lightImages = [];
+      const imgEl = Array.from(document.querySelectorAll('.image-gallery img')).find(i => i.src === src);
+      if (imgEl) {
+        const parentGallery = imgEl.closest('.image-gallery');
+        if (parentGallery) {
+          lightImages = Array.from(parentGallery.querySelectorAll('img')).map(i => i.src);
+          currentLightIndex = lightImages.indexOf(src);
+        } else {
+          lightImages = Array.from(document.querySelectorAll('.image-gallery img')).map(i => i.src);
+          currentLightIndex = lightImages.indexOf(src);
+        }
+      } else {
+        // fallback
+        lightImages = [src];
+        currentLightIndex = 0;
+      }
+      showLightbox(currentLightIndex);
+    }
+
+    function showLightbox(index) {
+      if (!lightImages.length) return;
+      currentLightIndex = (index + lightImages.length) % lightImages.length;
+      lightboxImage.src = lightImages[currentLightIndex];
+      lightboxModal.classList.add('show');
+      lightboxModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      lightboxModal.classList.remove('show');
+      lightboxModal.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    lightPrev.addEventListener('click', () => showLightbox(currentLightIndex - 1));
+    lightNext.addEventListener('click', () => showLightbox(currentLightIndex + 1));
+    lightClose.addEventListener('click', closeLightbox);
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!lightboxModal.classList.contains('show')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showLightbox(currentLightIndex - 1);
+      if (e.key === 'ArrowRight') showLightbox(currentLightIndex + 1);
+    });
+
+    /* ---------- small helpers ---------- */
+    function escapeHtml(unsafe) {
+      return (unsafe || '').toString()
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+    function nl2br(str) { return (str || '').replace(/\n/g, '<br>'); }
+
+    function formatRelativeDate(dateStr, timeStr) {
+      if (!dateStr) return 'Just now';
+      try {
+        const nice = new Date(dateStr + (timeStr ? 'T' + timeStr : ''));
+        const now = new Date();
+        const diff = now - nice;
+        const mins = Math.round(diff / 60000);
+        if (mins < 1) return 'Just now';
+        if (mins < 60) return mins + 'm ago';
+        const hours = Math.round(mins / 60);
+        if (hours < 24) return hours + 'h ago';
+        return nice.toLocaleDateString();
+      } catch (e) {
+        return dateStr;
+      }
+    }
+
+    /* ---------- ensure sidebar buttons highlight on click (keeps your markup intact) ---------- */
+    qsa('.menu-item').forEach(item => {
+      item.addEventListener('click', function () {
+        qsa('.menu-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    /* ---------- Keyboard accessible tabs: support Enter/Space ---------- */
+    qsa('.tab').forEach(t => {
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          activateTab(t.dataset.tab);
+          e.preventDefault();
+        }
+      });
+    });
+
+  </script>
+</body>
+
+</html>

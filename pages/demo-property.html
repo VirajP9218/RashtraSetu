@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RashtraSetu — Leaders Directory</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: #f4f7fb;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    /* NAVBAR */
+    .navbar-custom {
+        background: #0A2647;
+        padding: 12px;
+    }
+    .navbar-brand {
+        color: #fff !important;
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .edit-btn {
+        background: #144272;
+        color: #fff;
+        border-radius: 8px;
+        padding: 6px 14px;
+        border: none;
+    }
+
+    /* TABS */
+    .city-tab {
+        background: #0A2647;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 8px;
+        margin: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        display: inline-block;
+    }
+    .city-tab.active {
+        background: #144272;
+    }
+
+    /* SECTION HEADERS */
+    .section-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-top: 25px;
+        color: #0A2647;
+        border-left: 5px solid #144272;
+        padding-left: 12px;
+    }
+
+    /* CARDS */
+    .leader-card {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+        cursor: pointer;
+        transition: 0.2s;
+        height: 100%;
+    }
+    .leader-card:hover {
+        transform: translateY(-3px);
+    }
+    .leader-img {
+        width: 100%;
+        height: 180px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #ddd;
+    }
+    .leader-name {
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 10px;
+    }
+    .leader-role {
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* EDIT PROFILE MODAL */
+    .edit-profile-box {
+        background: white;
+        border: 3px solid #0A2647;
+        border-radius: 16px;
+        padding-bottom: 30px;
+    }
+    .cover-box {
+        width: 100%;
+        height: 180px;
+        background: #ddd;
+        position: relative;
+        border-radius: 12px 12px 0 0;
+    }
+    .profile-pic {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        border: 4px solid white;
+        position: absolute;
+        bottom: -55px;
+        left: 20px;
+        background: #ccc;
+        object-fit: cover;
+    }
+    .edit-input {
+        background: #f5f7fa;
+        border: 1px solid #cbd3df;
+        border-radius: 8px;
+        padding: 10px;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .save-btn {
+        margin-top: 20px;
+        width: 100%;
+        background: #144272;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-custom">
+  <div class="container-fluid d-flex justify-content-between">
+    <a class="navbar-brand">RashtraSetu Directory</a>
+
+    <button class="edit-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+        Edit Profile
+    </button>
+  </div>
+</nav>
+
+
+<!-- PCMC / PMC TABS -->
+<div class="text-center mt-4">
+    <span class="city-tab active" onclick="switchCity('pcmc')">PCMC</span>
+    <span class="city-tab" onclick="switchCity('pmc')">PMC</span>
+</div>
+
+
+<style>
+  .btn-knowmore {
+    background: #144272;
+    color: white;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    transition: 0.25s ease;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.btn-knowmore:hover {
+    background: #0A2647;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.btn-knowmore:active {
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.btn-knowmore {
+    margin-top: auto;
+}
+</style>
+
+
+<!-- =============================== PCMC SECTION =============================== -->
+<div id="pcmc" class="container mt-4">
+
+    <div class="section-title">Sabhapati/Chairman</div>
+    <div class="row mt-3 g-4">
+
+        <!--sabhapati Card 1 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_pcmc_sabhapati1">
+                <img src="images/nitin_landge.jpeg" class="leader-img">
+                <div class="leader-name">Nitin Landge</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pcmc_sabhapati1">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+
+        <!--sabhapati Modal 1 -->
+<div class="modal fade" id="modal_pcmc_sabhapati1">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+     <div class="modal-header">
+        <h5 class="modal-title fw-bold">Property Details — Nitin Landge</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Seller:</strong> Nitin Landge</p>
+          <p><strong>Property Type:</strong> Residential Plot</p>
+          <p><strong>Location:</strong> Marunji, Pimpri Chinchwad, Pune</p>
+          <p><strong>Plot Area:</strong> 3260 sq.ft</p>
+          <p><strong>Price:</strong> ₹1.15 Cr</p>
+          <p><strong>Average Price per sq.ft:</strong> ₹3.53 K</p>
+          <p><strong>Age:</strong> 10 Year Old</p>
+          <p><strong>Facing:</strong> East facing</p>
+          <p><strong>Open Sides:</strong> 2 open sides</p>
+          <p><strong>Facing Road Width:</strong> 51.0 m</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!--sabhapati Card 2 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_pcmc_sabhapati2">
+                <img src="images/santosh_londhe.jpeg" class="leader-img">
+                <div class="leader-name">Santosh Londhe</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pcmc_sabhapati2">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+
+           <!--sabhapati Modal 2 -->
+<div class="modal fade" id="modal_pcmc_sabhapati2">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+     <div class="modal-header">
+        <h5 class="modal-title fw-bold">Profile Details — Santosh Londhe</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Associated Name:</strong>Anita Santosh Londhe</p>
+          <p><strong>Location:</strong> Pune, Maharashtra</p>
+          <p><strong>Role:</strong> Developer / Landowner</p>
+          <p><strong>Project Details:</strong></p>
+          <ul style="margin-left:-10px;">
+              <li><strong>Number of RERA Projects:</strong> 2</li>
+              <li><strong>Total Project Portfolio:</strong> 3 (Floors range 10–15)</li>
+              <li><strong>Unit Sizes:</strong> 237 – 777 (sq.ft / sq.m)</li>
+              <li><strong>Project Type:</strong> Residential Projects</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+        <!--sabhapati Card 3 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_pcmc_sabhapati3">
+                <img src="dada.jpg" class="leader-img">
+                <div class="leader-name">mahesh Landge</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pcmc_sabhapati3">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+
+           <!--sabhapati Modal 3-->
+<div class="modal fade" id="modal_pcmc_sabhapati3">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <!-- Residential Property -->
+          <p><strong>Residential Flat:</strong></p>
+          <p>
+            Flat No. 102, Building No. 'S', Sheetal Baug Complex,  
+            Gavhane Vasti, Pune Nashik Road, Bhosari, Pune-411039  
+            <br>(Also his stated permanent address)
+          </p>
+          <!-- Agricultural Land -->
+          <p class="mt-3"><strong>Agricultural Land:</strong></p>
+          <ul style="margin-left:-10px;">
+              <li><strong>Location 1:</strong> Pimpalgaon Khed, Taluka Khed — Survey No. 1683 (1.30 Acres)</li>
+              <li><strong>Location 2:</strong> Kaddas, Taluka Khed —  
+                  Survey No. 1899, 1994/1, 2994/3, 2901  
+                  (Total Area: 8 Acres 14.5R)
+              </li>
+          </ul>
+          <!-- Non-Agricultural Land -->
+          <p class="mt-3"><strong>Non-Agricultural Land:</strong></p>
+          <p>
+            Charholi Bk, Taluka Haveli —  
+            Survey No. 214/4, 197/6, 197/4, 236/15, 193/3  
+            <br><strong>Total Area:</strong> 13,187 sq.ft
+          </p>
+          <!-- Movable Assets -->
+          <p class="mt-3"><strong>🚗 Movable Assets (Approx Total: ₹6 Crore):</strong></p>
+          <ul style="margin-left:-10px;">
+              <li><strong>Motor Vehicles:</strong> Nil (as per affidavit)</li>
+              <li><strong>Jewellery:</strong>
+                <ul>
+                    <li><strong>Self:</strong> 9 Tola Gold — ₹6,75,000</li>
+                    <li><strong>Spouse:</strong> 25 Tola Gold — ₹18,75,000</li>
+                </ul>
+              </li>
+              <li><strong>Other Assets:</strong> Revolver valued at ₹57,600</li>
+              <li><strong>Investments:</strong>  
+                Bank deposits (Bank of Maharashtra, HDFC Bank) and  
+                shares in companies/societies such as:  
+                Buldana Urban Co-op Credit Society Ltd,  
+                Sant Co-operative Tukaram Sugar Factory
+              </li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+            <!--sabhapati Card 4 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_sabhapati_4">
+                <img src="images/jagdish.jpeg" class="leader-img">
+                <div class="leader-name">Jagdish Shetty</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pmc_sabhapati4">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+    </div>
+
+       <!--sabhapati Modal 4-->
+<div class="modal fade" id="modal_pmc_sabhapati4">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Name:</strong> Jagdish Shetty</p>
+          <p><strong>Position / Role:</strong> Former Chairman, Standing Committee, Pimpri-Chinchwad Municipal Corporation (PCMC) :contentReference[oaicite:2]{index=2}</p>
+          <p><strong>Residential / Property Holdings:</strong></p>
+          <p>— (No verified public data found)</p>
+          <p class="mt-3"><strong>Immovable Assets (Land / Property):</strong></p>
+          <ul style="margin-left:-10px;">
+            <li>Location / Address: —</li>
+            <li>Property Type (Flat / Land / Commercial): —</li>
+            <li>Survey / Survey No.: —</li>
+            <li>Area / Size: —</li>
+            <li>Remarks: —</li>
+          </ul>
+          <p class="mt-3"><strong>Movable Assets (Vehicles / Investments / Bank Deposits / Jewellery):</strong></p>
+          <ul style="margin-left:-10px;">
+            <li>Motor Vehicles: —</li>
+            <li>Bank Deposits / Investments: —</li>
+            <li>Jewellery: —</li>
+            <li>Other Assets: —</li>
+            <li>Remarks / Disclosures: —</li>
+          </ul>
+          <p class="mt-3"><strong>Other Relevant Info:</strong></p>
+          <p>
+            There were **allegations** on caste-certificate validity related to his 2012 election nomination. :contentReference[oaicite:3]{index=3}  
+            But there is **no credible public record** of his real estate or asset declarations that can be referenced.  
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+         
+
+
+
+    <!-- Commissioners -->
+    <div class="section-title">Commissioners</div>
+    <div class="row mt-3 g-4">
+
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_shekhar_pcmc">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">Shekhar Singh</div>
+                <div class="leader-role">PCMC Commissioner</div>
+            </div>
+        </div>
+
+        <!-- Add 3 more commissioner cards same format -->
+    </div>
+
+
+    <!-- Mayor -->
+    <div class="section-title">Mayor</div>
+    <div class="row mt-3 g-4">
+
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_mayor_pcmc">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">PCMC Mayor</div>
+                <div class="leader-role">Mayor</div>
+            </div>
+        </div>
+
+        <!-- Add 3 more mayor cards -->
+    </div>
+
+
+    <!-- MLA -->
+    <div class="section-title">MLA</div>
+    <div class="row mt-3 g-4">
+
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_landge_pcmc">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">Mahesh Landge</div>
+                <div class="leader-role">MLA - PCMC</div>
+            </div>
+        </div>
+
+        <!-- Add 3 more MLA cards -->
+    </div>
+
+
+
+    <!-- MP -->
+    <div class="section-title">MP</div>
+    <div class="row mt-3 g-4">
+
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_amol_pcmc">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">Amol Khole</div>
+                <div class="leader-role">MP - PCMC</div>
+            </div>
+        </div>
+
+        <!-- Add 3 more MP cards -->
+    </div>
+</div>
+
+
+
+
+<!-- =============================== PMC SECTION =============================== -->
+<div id="pmc" class="container mt-4" style="display:none;">
+
+    <div class="section-title">Sabhapati/Chairman</div>
+    <div class="row mt-3 g-4">
+
+     <!--sabhapati Card 1 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_pmc_sabhapati1">
+                <img src="images/hemant.jpeg" class="leader-img">
+                <div class="leader-name">Hemant Rasane</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pmc_sabhapati1">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+
+        <!--sabhapati Modal 1 -->
+<div class="modal fade" id="modal_pmc_sabhapati1">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+     <div class="modal-header">
+        <h5 class="modal-title fw-bold">Property Details — Nitin Landge</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Seller:</strong> Nitin Landge</p>
+          <p><strong>Property Type:</strong> Residential Plot</p>
+          <p><strong>Location:</strong> Marunji, Pimpri Chinchwad, Pune</p>
+          <p><strong>Plot Area:</strong> 3260 sq.ft</p>
+          <p><strong>Price:</strong> ₹1.15 Cr</p>
+          <p><strong>Average Price per sq.ft:</strong> ₹3.53 K</p>
+          <p><strong>Age:</strong> 10 Year Old</p>
+          <p><strong>Facing:</strong> East facing</p>
+          <p><strong>Open Sides:</strong> 2 open sides</p>
+          <p><strong>Facing Road Width:</strong> 51.0 m</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!--sabhapati Card 2 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_sabhapati_2">
+                <img src="images/santosh_londhe.jpeg" class="leader-img">
+                <div class="leader-name">Sunil Kamble</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pmc_sabhapati2">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+
+           <!--sabhapati Modal 2 -->
+<div class="modal fade" id="modal_pmc_sabhapati2">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+     <div class="modal-header">
+        <h5 class="modal-title fw-bold">Profile Details — Santosh Londhe</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Associated Name:</strong>Anita Santosh Londhe</p>
+          <p><strong>Location:</strong> Pune, Maharashtra</p>
+          <p><strong>Role:</strong> Developer / Landowner</p>
+          <p><strong>Project Details:</strong></p>
+          <ul style="margin-left:-10px;">
+              <li><strong>Number of RERA Projects:</strong> 2</li>
+              <li><strong>Total Project Portfolio:</strong> 3 (Floors range 10–15)</li>
+              <li><strong>Unit Sizes:</strong> 237 – 777 (sq.ft / sq.m)</li>
+              <li><strong>Project Type:</strong> Residential Projects</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!--sabhapati Card 3 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_sabhapati_3">
+                <img src="images/murlidhar.jpeg" class="leader-img">
+                <div class="leader-name">Murlidhar Mohol</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pmc_sabhapati3">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+
+           <!--sabhapati Modal 3-->
+<div class="modal fade" id="modal_pmc_sabhapati3">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <!-- Residential Property -->
+          <p><strong>Residential Flat:</strong></p>
+          <p>
+            Flat No. 102, Building No. 'S', Sheetal Baug Complex,  
+            Gavhane Vasti, Pune Nashik Road, Bhosari, Pune-411039  
+            <br>(Also his stated permanent address)
+          </p>
+          <!-- Agricultural Land -->
+          <p class="mt-3"><strong>Agricultural Land:</strong></p>
+          <ul style="margin-left:-10px;">
+              <li><strong>Location 1:</strong> Pimpalgaon Khed, Taluka Khed — Survey No. 1683 (1.30 Acres)</li>
+              <li><strong>Location 2:</strong> Kaddas, Taluka Khed —  
+                  Survey No. 1899, 1994/1, 2994/3, 2901  
+                  (Total Area: 8 Acres 14.5R)
+              </li>
+          </ul>
+          <!-- Non-Agricultural Land -->
+          <p class="mt-3"><strong>Non-Agricultural Land:</strong></p>
+          <p>
+            Charholi Bk, Taluka Haveli —  
+            Survey No. 214/4, 197/6, 197/4, 236/15, 193/3  
+            <br><strong>Total Area:</strong> 13,187 sq.ft
+          </p>
+          <!-- Movable Assets -->
+          <p class="mt-3"><strong>🚗 Movable Assets (Approx Total: ₹6 Crore):</strong></p>
+          <ul style="margin-left:-10px;">
+              <li><strong>Motor Vehicles:</strong> Nil (as per affidavit)</li>
+              <li><strong>Jewellery:</strong>
+                <ul>
+                    <li><strong>Self:</strong> 9 Tola Gold — ₹6,75,000</li>
+                    <li><strong>Spouse:</strong> 25 Tola Gold — ₹18,75,000</li>
+                </ul>
+              </li>
+              <li><strong>Other Assets:</strong> Revolver valued at ₹57,600</li>
+              <li><strong>Investments:</strong>  
+                Bank deposits (Bank of Maharashtra, HDFC Bank) and  
+                shares in companies/societies such as:  
+                Buldana Urban Co-op Credit Society Ltd,  
+                Sant Co-operative Tukaram Sugar Factory
+              </li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <!--sabhapati Card 4 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_sabhapati_4">
+                <img src="images/ganesh.jpeg" class="leader-img">
+                <div class="leader-name">Ganesh Bidka</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pmc_sabhapati4">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+    </div>
+
+       <!--sabhapati Modal 4-->
+<div class="modal fade" id="modal_pmc_sabhapati4">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Name:</strong> Jagdish Shetty</p>
+          <p><strong>Position / Role:</strong> Former Chairman, Standing Committee, Pimpri-Chinchwad Municipal Corporation (PCMC) :contentReference[oaicite:2]{index=2}</p>
+          <p><strong>Residential / Property Holdings:</strong></p>
+          <p>— (No verified public data found)</p>
+          <p class="mt-3"><strong>Immovable Assets (Land / Property):</strong></p>
+          <ul style="margin-left:-10px;">
+            <li>Location / Address: —</li>
+            <li>Property Type (Flat / Land / Commercial): —</li>
+            <li>Survey / Survey No.: —</li>
+            <li>Area / Size: —</li>
+            <li>Remarks: —</li>
+          </ul>
+          <p class="mt-3"><strong>Movable Assets (Vehicles / Investments / Bank Deposits / Jewellery):</strong></p>
+          <ul style="margin-left:-10px;">
+            <li>Motor Vehicles: —</li>
+            <li>Bank Deposits / Investments: —</li>
+            <li>Jewellery: —</li>
+            <li>Other Assets: —</li>
+            <li>Remarks / Disclosures: —</li>
+          </ul>
+          <p class="mt-3"><strong>Other Relevant Info:</strong></p>
+          <p>
+            There were **allegations** on caste-certificate validity related to his 2012 election nomination. :contentReference[oaicite:3]{index=3}  
+            But there is **no credible public record** of his real estate or asset declarations that can be referenced.  
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+ <!--sabhapati Card 5 -->
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_sabhapati_4">
+                <img src="images/baburao.jpeg" class="leader-img">
+                <div class="leader-name">Baburao Chandere</div>
+                <div class="leader-role">Sabhapati/Chairman</div>
+                  <br>
+                 <button class="btn btn-knowmore" data-bs-toggle="modal"
+            data-bs-target="#modal_pmc_sabhapati4">
+            <i class="fa-solid fa-circle-info me-1"></i> Know more
+        </button>
+            </div>
+        </div>
+    </div>
+
+       <!--sabhapati Modal 5-->
+<div class="modal fade" id="modal_pmc_sabhapati4">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-body">
+        <div class="p-3" style="border-left:4px solid #144272; background:#f8f9fb; border-radius:8px;">
+          <p><strong>Name:</strong> Jagdish Shetty</p>
+          <p><strong>Position / Role:</strong> Former Chairman, Standing Committee, Pimpri-Chinchwad Municipal Corporation (PCMC) :contentReference[oaicite:2]{index=2}</p>
+          <p><strong>Residential / Property Holdings:</strong></p>
+          <p>— (No verified public data found)</p>
+          <p class="mt-3"><strong>Immovable Assets (Land / Property):</strong></p>
+          <ul style="margin-left:-10px;">
+            <li>Location / Address: —</li>
+            <li>Property Type (Flat / Land / Commercial): —</li>
+            <li>Survey / Survey No.: —</li>
+            <li>Area / Size: —</li>
+            <li>Remarks: —</li>
+          </ul>
+          <p class="mt-3"><strong>Movable Assets (Vehicles / Investments / Bank Deposits / Jewellery):</strong></p>
+          <ul style="margin-left:-10px;">
+            <li>Motor Vehicles: —</li>
+            <li>Bank Deposits / Investments: —</li>
+            <li>Jewellery: —</li>
+            <li>Other Assets: —</li>
+            <li>Remarks / Disclosures: —</li>
+          </ul>
+          <p class="mt-3"><strong>Other Relevant Info:</strong></p>
+          <p>
+            There were **allegations** on caste-certificate validity related to his 2012 election nomination. :contentReference[oaicite:3]{index=3}  
+            But there is **no credible public record** of his real estate or asset declarations that can be referenced.  
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Commissioners -->
+    <div class="section-title">Commissioners</div>
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_pmc_commissioner">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">PMC Commissioner</div>
+                <div class="leader-role">Commissioner</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Mayor -->
+    <div class="section-title">Mayor</div>
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+            <div class="leader-card" data-bs-toggle="modal" data-bs-target="#modal_pmcmayor">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">PMC Mayor</div>
+                <div class="leader-role">Mayor</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MLA -->
+    <div class="section-title">MLA</div>
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+            <div class="leader-card">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">PMC MLA</div>
+                <div class="leader-role">MLA</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MP -->
+    <div class="section-title">MP</div>
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+            <div class="leader-card">
+                <img src="https://via.placeholder.com/300" class="leader-img">
+                <div class="leader-name">PMC MP</div>
+                <div class="leader-role">MP</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- =============================== EDIT PROFILE MODAL =============================== -->
+
+<div class="modal fade" id="editProfileModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content edit-profile-box">
+
+      <div class="cover-box">
+        <img id="coverPreview" class="w-100 h-100" style="object-fit:cover; border-radius:12px 12px 0 0;">
+        <input type="file" id="coverUpload" style="display:none" onchange="loadCover(event)">
+        <button onclick="document.getElementById('coverUpload').click()" 
+        class="btn btn-dark position-absolute" style="top:10px; right:10px;">Change Cover</button>
+        <img id="profilePreview" class="profile-pic">
+        <input type="file" id="profileUpload" style="display:none" onchange="loadProfile(event)">
+      </div>
+
+      <div class="p-4">
+
+        <button onclick="document.getElementById('profileUpload').click()" 
+        class="btn btn-outline-dark" style="margin-left:140px; margin-top:-20px;">Change Profile Photo</button>
+
+        <input type="text" class="edit-input" placeholder="Full Name">
+        <input type="text" class="edit-input" placeholder="Bio">
+        <input type="text" class="edit-input" placeholder="Location">
+
+        <button class="save-btn">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- =============================== JS =============================== -->
+
+<script>
+function switchCity(city) {
+    document.getElementById("pcmc").style.display = city === "pcmc" ? "block" : "none";
+    document.getElementById("pmc").style.display = city === "pmc" ? "block" : "none";
+
+    document.querySelectorAll(".city-tab").forEach(t => t.classList.remove("active"));
+    event.target.classList.add("active");
+}
+
+/* PROFILE IMAGE UPLOAD */
+function loadProfile(event) {
+    document.getElementById('profilePreview').src = URL.createObjectURL(event.target.files[0]);
+}
+
+/* COVER UPLOAD */
+function loadCover(event) {
+    document.getElementById('coverPreview').src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

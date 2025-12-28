@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Issues</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ============ SIDEBAR CSS ============ */
+    body {
+      background: #eef2f7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+    }
+
+    .sidebar {
+      width: 230px;
+      height: 100vh;
+      background: #0A2647;
+      color: #fff;
+      position: fixed;
+      padding-top: 25px;
+      left: 0;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      color: #FFDE59;
+      margin-bottom: 25px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .menu-item {
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: 0.3s;
+      border-radius: 5px;
+      margin: 2px 10px;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: #144272;
+    }
+
+    .content {
+      margin-left: 240px;
+      padding: 25px;
+    }
+
+    /* ========== HERO SECTION ========= */
+    .hero {
+      position: relative;
+      height: 300px;
+      background: url('waterIssue.png') center/cover no-repeat;
+      border-radius: 15px;
+      overflow: hidden;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: brightness(1.0);
+    }
+
+    .hero h1 {
+      position: relative;
+      color: #ffffff;
+      font-size: 42px;
+      font-weight: 500;
+      font-family: Georgia, serif;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.7),
+        0 3px 12px rgba(0, 0, 0, 0.6),
+        0 5px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ========== SEARCH BOX ========= */
+    .search-box {
+      width: 100%;
+      max-width: 650px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50px;
+      padding: 10px 20px;
+      display: flex;
+      gap: 15px;
+      box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.2);
+      align-items: center;
+      margin: 10px auto 20px auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .issue-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      height: 260px;
+      transition: 0.3s;
+    }
+
+    .issue-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .img-after {
+      opacity: 0;
+    }
+
+    .issue-card:hover .img-before {
+      opacity: 0;
+    }
+
+    .issue-card:hover .img-after {
+      opacity: 1;
+    }
+
+    .issue-overlay {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: 12px;
+      transform: translateY(100%);
+      transition: 0.3s;
+    }
+
+    .issue-card:hover .issue-overlay {
+      transform: translateY(0%);
+    }
+
+    .filter-btn {
+      border-radius: 30px;
+      margin: 4px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h3>RashtraSetu</h3>
+    <a class="menu-item"><i class="fa-solid fa-house"></i>Home</a>
+    <a class="menu-item active"><i class="fa-solid fa-search"></i>Search</a>
+    <a class="menu-item"><i class="fa-solid fa-compass"></i>Explore</a>
+    <a class="menu-item"><i class="fa-solid fa-plus-circle"></i>Add Issues</a>
+    <a class="menu-item"><i class="fa-solid fa-users"></i>About Leaders</a>
+    <a class="menu-item"><i class="fa-solid fa-user-tie"></i>Politicians</a>
+    <a class="menu-item"><i class="fa-solid fa-bell"></i>Notification</a>
+    <a class="menu-item"><i class="fa-solid fa-user"></i>Profile</a>
+    <a class="menu-item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-box">
+    <input type="text" id="searchInput" class="form-control border-0" placeholder="Search here...">
+    <button class="btn btn-outline-primary px-4 rounded-pill" onclick="searchRedirect()">Search</button>
+  </div>
+
+  <div class="content">
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Water & Drainage Issues</h1>
+    </section>
+
+    <!-- FILTER BUTTONS -->
+    <div class="container text-center my-4">
+      <button class="btn btn-outline-secondary filter-btn" onclick="filterIssues('all')">All</button>
+      <button class="btn btn-outline-secondary filter-btn" onclick="filterIssues('waterlogging')">Water Logging</button>
+      <button class="btn btn-outline-secondary filter-btn" onclick="filterIssues('drainage')">Drainage Blockage</button>
+      <button class="btn btn-outline-secondary filter-btn" onclick="filterIssues('contamination')">Contaminated Water</button>
+      <button class="btn btn-outline-secondary filter-btn" onclick="filterIssues('pipeline')">Broken Pipeline</button>
+      <button class="btn btn-outline-secondary filter-btn" onclick="filterIssues('lowpressure')">Low Water Pressure</button>
+    </div>
+
+    <!-- ISSUE CARDS -->
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- CARD 1 -->
+        <div class="col-md-4 issue-item" data-category="waterlogging">
+          <div class="issue-card"
+            data-title="Severe Water Logging During Rain"
+            data-area="Ward 5 – Market Area"
+            data-status="Pending"
+            data-time="2 Weeks"
+            data-desc="Heavy water logging has caused traffic jams and drainage overflow."
+            data-longdesc="During heavy rainfall, the entire market area becomes waterlogged due to poor drainage infrastructure.The area experiences heavy water accumulation during rain, flooding streets and low-lying zones. Traffic gets disrupted, and vehicles and pedestrians struggle to move safely. Poor drainage causes stagnant water, leading to unhygienic conditions and mosquito breeding. Ground floors of nearby houses and shops often get affected, damaging property. The water is usually murky, mixed with debris, creating health and safety hazards for residents."
+            data-img1="waterlog1.png"
+            data-img2="waterlog2.png">
+            <img src="waterlog1.png" class="img-before">
+            <img src="waterlog2.png" class="img-after">
+            <div class="issue-overlay">
+              <h5>Ward 5 – Market Area</h5>
+              <p>Severe Water Logging During Rain</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="col-md-4 issue-item" data-category="drainage">
+          <div class="issue-card"
+            data-title="Drainage Blocked – Smelly Water"
+            data-area="Ward 10 – Residential Zone"
+            data-status="In Progress"
+            data-time="4 Days"
+            data-desc="Drain blockage causing foul smell and unhygienic surroundings."
+            data-longdesc="Residents have reported multiple complaints regarding the drainage overflow.The drainage system in the area is clogged, causing water to remain stagnant for long periods. The water becomes foul-smelling and dirty, spreading a strong odor throughout the surroundings. Overflowing drains sometimes flood nearby streets and homes, making movement difficult. The stagnant, smelly water attracts insects and poses serious health risks to residents. Poor maintenance and garbage accumulation worsen the situation, creating unhygienic living conditions."
+            data-img1="drainage1.png"
+            data-img2="drainage2.png">
+            <img src="drainage1.png" class="img-before">
+            <img src="drainage2.png" class="img-after">
+            <div class="issue-overlay">
+              <h5>Ward 10 – Residential Zone</h5>
+              <p>Drainage Blocked – Smelly Water</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="col-md-4 issue-item" data-category="contamination">
+          <div class="issue-card"
+            data-title="Contaminated Drinking Water"
+            data-area="Ward 3 – Near School"
+            data-status="Urgent"
+            data-time="1 Day"
+            data-desc="Students and residents receiving muddy and unsafe drinking water."
+            data-longdesc="Water samples were tested and found unsafe for consumption.The drinking water in the area is visibly dirty, often containing sediments, debris, or discoloration. Residents report a foul taste and odor, making it unsafe for consumption. Contamination is caused by mixing of sewage or stagnant water with the water supply. Prolonged use of this water leads to waterborne diseases and health issues. Lack of proper filtration and maintenance worsens the situation, affecting the daily life of the community."
+            data-img1="contaminated1.png"
+            data-img2="contaminated2.png">
+            <img src="contaminated1.png" class="img-before">
+            <img src="contaminated2.png" class="img-after">
+            <div class="issue-overlay">
+              <h5>Ward 3 – Near School</h5>
+              <p>Contaminated Drinking Water</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="col-md-4 issue-item" data-category="pipeline">
+          <div class="issue-card"
+            data-title="Broken Pipeline Causing Leakage"
+            data-area="Ward 12 – Industrial Area"
+            data-status="In Progress"
+            data-time="5 Days"
+            data-desc="Major leakage due to damaged water pipeline."
+            data-longdesc="Water wastage has increased significantly due to an underground pipeline crack.A damaged water pipeline in the area is leaking continuously, causing water to flow onto streets and nearby land. The leakage creates puddles, making the roads slippery and difficult to navigate. Wasted water increases scarcity in the community and affects household supply. The wet surroundings promote mosquito breeding and unhygienic conditions. Neglected repair work worsens the problem, disrupting daily life and local sanitation."
+            data-img1="brokenPipe1.png"
+            data-img2="brokenPipe2.png">
+            <img src="brokenPipe1.png" class="img-before">
+            <img src="brokenPipe2.png" class="img-after">
+            <div class="issue-overlay">
+              <h5>Ward 12 – Industrial Area</h5>
+              <p>Broken Pipeline Causing Leakage</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="col-md-4 issue-item" data-category="lowpressure">
+          <div class="issue-card"
+            data-title="Low Water Pressure"
+            data-area="Ward 8 – Zone C"
+            data-status="Pending"
+            data-time="1 Week"
+            data-desc="Residents getting extremely low water flow during morning hours."
+            data-longdesc="This issue mainly occurs in peak hours when supply drops due to valve malfunction.The area experiences consistently low water pressure, making it difficult for residents to access sufficient water for daily needs. Faucets and taps provide only a weak trickle, affecting cooking, cleaning, and bathing. Water shortages are frequent, especially during peak hours or summer months. Residents often rely on stored water, adding inconvenience and extra effort. Poor maintenance of pipelines and supply systems worsens the problem, impacting the overall quality of life."
+            data-img1="lowpressure1.png"
+            data-img2="lowpressure2.png">
+            <img src="lowpressure1.png" class="img-before">
+            <img src="lowpressure2.png" class="img-after">
+            <div class="issue-overlay">
+              <h5>Ward 8 – Zone C</h5>
+              <p>Low Water Pressure in Morning</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="col-md-4 issue-item" data-category="waterlogging">
+          <div class="issue-card"
+            data-title="Flooded Roads During Rain"
+            data-area="Ward 15 – Park Area"
+            data-status="Completed"
+            data-time="3 Weeks"
+            data-desc="Roads were fully submerged due to heavy rainfall."
+            data-longdesc="The repairing work has been completed, including drainage cleaning.The roads in the area get completely flooded during heavy rainfall, making travel difficult for vehicles and pedestrians. Waterlogging hides potholes and uneven surfaces, increasing the risk of accidents. Traffic jams and slow movement are common, disrupting daily commutes. Nearby homes and shops may get partially submerged, causing property damage. Stagnant rainwater creates unhygienic conditions and attracts mosquitoes, posing health risks."
+            data-img1="floodWater1.png"
+            data-img2="floodWater2.png">
+            <img src="floodWater1.png" class="img-before">
+            <img src="floodWater2.png" class="img-after">
+            <div class="issue-overlay">
+              <h5>Ward 15 – Park Area</h5>
+              <p>Flooded Roads During Rain</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div> <!-- END CONTENT -->
+
+  <!-- MODAL -->
+  <div class="modal fade" id="issueModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle"></h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <img id="modalImg1" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-md-6">
+              <img id="modalImg2" class="img-fluid rounded shadow">
+            </div>
+          </div>
+
+          <p id="modalDesc"></p>
+          <p id="modalLongDesc" class="fw-semibold"></p>
+
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Area:</strong> <span id="modalArea"></span></li>
+            <li class="list-group-item"><strong>Status:</strong> <span id="modalStatus"></span></li>
+            <li class="list-group-item"><strong>Time Period:</strong> <span id="modalTime"></span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- SCRIPT FOR MODAL -->
+  <script>
+    document.querySelectorAll('.issue-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.getElementById('modalTitle').innerText = card.dataset.title;
+        document.getElementById('modalArea').innerText = card.dataset.area;
+        document.getElementById('modalStatus').innerText = card.dataset.status;
+        document.getElementById('modalTime').innerText = card.dataset.time;
+        document.getElementById('modalDesc').innerText = card.dataset.desc;
+        document.getElementById('modalLongDesc').innerText = card.dataset.longdesc;
+
+        document.getElementById('modalImg1').src = card.dataset.img1;
+        document.getElementById('modalImg2').src = card.dataset.img2;
+
+        new bootstrap.Modal(document.getElementById('issueModal')).show();
+      });
+    });
+  </script>
+
+</body>
+
+</html>

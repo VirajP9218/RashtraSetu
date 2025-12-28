@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Support - RashtraSetu</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    background: #eef4ff;
+    font-family: 'Segoe UI', sans-serif;
+    color: #03396c;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #002b5b;
+    color: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px 0;
+  }
+  .sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 500;
+    border-radius: 5px;
+    margin: 2px 10px;
+  }
+  .sidebar a:hover {
+    background: #005f8f;
+    padding-left: 25px;
+  }
+
+  /* Main Content */
+  .container-content {
+    margin-left: 260px;
+    padding: 30px;
+  }
+
+  /* Enhanced Page Header */
+  .page-header {
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    margin-bottom: 50px;
+    padding-bottom: 15px;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeSlide 1s forwards;
+  }
+
+  .page-header i {
+    color: #0056b3;
+    margin-right: 10px;
+  }
+
+  .page-header::after {
+    content: '';
+    display: block;
+    width: 140px;
+    height: 5px;
+    background: #0056b3;
+    margin: 10px auto 0;
+    border-radius: 3px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    width: 40px;
+    height: 2px;
+    background: #0056b3;
+    transform: translateY(-50%);
+  }
+
+  @keyframes fadeSlide {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Support Cards */
+  .support-card {
+    background: linear-gradient(135deg, #ffffff, #f0f4ff);
+    border-radius: 25px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: transform .4s, box-shadow .4s;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .support-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Icon circle */
+  .support-card i {
+    font-size: 36px;
+    color: #fff;
+    background: #0056b3;
+    padding: 18px;
+    border-radius: 50%;
+    float: right;
+    margin-left: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .support-card h3 {
+    font-weight: 700;
+    margin-top: 10px;
+  }
+
+  .support-card h5 {
+    font-weight: 600;
+    margin-top: 15px;
+    color: #03396c;
+  }
+
+  .support-card p {
+    text-align: justify;
+    color: #444;
+    margin-top: 5px;
+  }
+
+  .support-card ul {
+    padding-left: 20px;
+    color: #444;
+    margin-top: 5px;
+  }
+
+  /* Highlighted Boxes for Objective/Vision/Mission */
+  .highlight-box {
+    background: #dbe6f6;
+    border-left: 5px solid #0056b3;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    float: right;
+    margin-top: 15px;
+  }
+
+  /* Fade-in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: .8s ease-in-out;
+  }
+  .fade-in.appear {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Responsive */
+  @media(max-width: 768px) {
+    .sidebar {
+      width: 200px;
+    }
+    .container-content {
+      margin-left: 220px;
+    }
+  }
+  @media(max-width: 576px) {
+    .sidebar {
+      width: 100%;
+      position: relative;
+    }
+    .container-content {
+      margin-left: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>RashtraSetu</h3>
+  <a href="home.html" class="menu-item active"><i class="fa-solid fa-house"></i>Home</a>
+  <a href="#" class="menu-item"><i class="fa-solid fa-search"></i>Search</a>
+  <a href="explore.html" class="menu-item"><i class="fa-solid fa-compass"></i>Explore</a>
+  <a href="add-issues.html" class="menu-item"><i class="fa-solid fa-plus-circle"></i>Add Issues</a>
+  <a href="janadicar-final.html" class="menu-item"><i class="fa-solid fa-gavel"></i>Janadhikar</a>
+  <a href="#" class="menu-item"><i class="fa-solid fa-users"></i>About Our Leaders</a>
+  <a href="politician_property.html" class="menu-item"><i class="fa-solid fa-user-tie"></i>Politician Properties</a>
+  <a href="updates.html" class="menu-item"><i class="fa-solid fa-bell"></i>Updates</a>
+  <a href="profile.html" class="menu-item"><i class="fa-solid fa-user"></i>Profile</a>
+  <a href="#" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+<!--sidebar styling CSS-->
+<style>
+body{
+    margin-left:230px;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: #0A2647;
+    color: #fff;
+    padding-top: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    z-index: 1050;
+}
+
+.sidebar h3 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #FFDE59;
+}
+
+.menu-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: #144272;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    body {
+        margin-left: 0;
+    }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+}
+</style>
+<!-- Content -->
+<div class="container-content">
+ <h1 class="page-header"><i class="fas fa-hands-helping"></i> Public Support Services</h1>
+
+ <!-- Healthcare Support -->
+ <div class="support-card fade-in">
+    <i class="fas fa-hospital"></i>
+    <h3>Healthcare Support</h3>
+    <p>Ayushman Bharat — Medical treatment benefits for eligible families.</p>
+    <div class="highlight-box">
+      <h5>Objective</h5>
+      <p>Provide accessible, affordable, and quality healthcare services to all citizens, especially economically weaker sections, reducing financial burden.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Vision</h5>
+      <p>Ensure a healthier nation with universal health coverage, improved life expectancy, and reduced disease burden.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Mission</h5>
+      <ul>
+        <li>Implement health insurance & cashless hospitalization schemes.</li>
+        <li>Expand Health & Wellness Centers for preventive care.</li>
+        <li>Provide financial protection against catastrophic health expenditure.</li>
+        <li>Strengthen public healthcare infrastructure nationwide.</li>
+      </ul>
+    </div>
+    <button class="btn btn-success rounded-pill" onclick="window.open('https://pmjay.gov.in', '_blank')">Learn More</button>
+ </div>
+
+ <!-- Employment Assistance -->
+ <div class="support-card fade-in">
+    <i class="fas fa-briefcase"></i>
+    <h3>Employment Assistance</h3>
+    <p>Skill India — Training programs to enhance job opportunities.</p>
+    <div class="highlight-box">
+      <h5>Objective</h5>
+      <p>Empower youth with industry-relevant skills, vocational training, and entrepreneurship opportunities to enhance employability.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Vision</h5>
+      <p>Make India a global leader in skilled workforce and reduce unemployment.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Mission</h5>
+      <ul>
+        <li>Conduct skill development programs aligned with industry standards.</li>
+        <li>Provide certifications to improve employability.</li>
+        <li>Support entrepreneurship & startup initiatives for youth.</li>
+        <li>Collaborate with industries for employment placement.</li>
+      </ul>
+    </div>
+    <button class="btn btn-success rounded-pill onclick="window.open('https://www.msde.gov.in', '_blank')">Explore</button>
+ </div>
+
+ <!-- Student Scholarship -->
+ <div class="support-card fade-in">
+    <i class="fas fa-graduation-cap"></i>
+    <h3>Student Scholarship</h3>
+    <p>Government scholarship schemes for higher education students.</p>
+    <div class="highlight-box">
+      <h5>Objective</h5>
+      <p>Ensure access to higher education for economically weaker and meritorious students.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Vision</h5>
+      <p>Develop a knowledgeable, skilled, and competitive youth capable of contributing to national development.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Mission</h5>
+      <ul>
+        <li>Provide merit-based scholarships for secondary & higher education.</li>
+        <li>Support tuition fees and academic expenses.</li>
+        <li>Encourage marginalized students to pursue quality education.</li>
+        <li>Promote inclusive access to education.</li>
+      </ul>
+    </div>
+    <button class="btn btn-success rounded-pill" onclick="window.open('https://scholarships.gov.in', '_blank')">Apply Now</button>
+ </div>
+
+ <!-- Women Support -->
+ <div class="support-card fade-in">
+    <i class="fas fa-users"></i>
+    <h3>Women Support</h3>
+    <p>Empowering and protecting women through government initiatives.</p>
+    <div class="highlight-box">
+      <h5>Objective</h5>
+      <p>Promote gender equality, ensure safety, provide economic support, and empower women socially and professionally.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Vision</h5>
+      <p>Create an empowered society where women participate in economic, social, and political life.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Mission</h5>
+      <ul>
+        <li>Implement skill development, training & employment programs.</li>
+        <li>Provide financial assistance and subsidies for women entrepreneurs.</li>
+        <li>Ensure safety and legal protection nationwide.</li>
+        <li>Promote awareness campaigns for gender equality.</li>
+      </ul>
+    </div>
+    <button class="btn btn-success rounded-pill" onclick="window.open('https://wcd.nic.in', '_blank')">Know More</button>
+ </div>
+
+ <!-- Farmer Support -->
+ <div class="support-card fade-in">
+    <i class="fas fa-seedling"></i>
+    <h3>Farmer Support (PM-KISAN)</h3>
+    <p>Financial assistance for farmers to support agriculture.</p>
+    <div class="highlight-box">
+      <h5>Objective</h5>
+      <p>Provide direct income support to small & marginal farmers to improve financial stability and promote sustainable agriculture.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Vision</h5>
+      <p>Create a prosperous agricultural sector with modern farming techniques and enhanced income security for farmers.</p>
+    </div>
+    <div class="highlight-box">
+      <h5>Mission</h5>
+      <ul>
+        <li>Directly transfer financial support to farmers’ accounts.</li>
+        <li>Promote modern farming methods & training.</li>
+        <li>Support crop insurance & disaster relief schemes.</li>
+        <li>Encourage sustainable agriculture practices.</li>
+      </ul>
+    </div>
+    <button class="btn btn-success rounded-pill" onclick="window.open('https://pmkisan.gov.in', '_blank')">Check Status</button>
+ </div>
+
+</div>
+
+<script>
+// Fade-in Animation Script
+const elements = document.querySelectorAll('.fade-in');
+function scrollAnimation() {
+  elements.forEach(el => {
+    const pos = el.getBoundingClientRect().top;
+    if (pos < window.innerHeight - 50) {
+      el.classList.add('appear');
+    }
+  });
+}
+window.addEventListener('scroll', scrollAnimation);
+scrollAnimation();
+</script>
+
+</body>
+</html>

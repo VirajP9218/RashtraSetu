@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RashtraSetu - Explore</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            background: #eef2f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            background: #0A2647;
+            color: #fff;
+            position: fixed;
+            padding-top: 25px;
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            color: #FFDE59;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 5px;
+            margin: 2px 10px;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+        }
+
+        .menu-item:hover,
+        .active {
+            background: #144272;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 25px;
+        }
+
+        .post-card {
+            overflow: hidden;
+            position: relative;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardFadeIn 0.8s forwards;
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .row.g-3 .col-md-4:nth-child(1) .post-card {
+            animation-delay: 0.1s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(2) .post-card {
+            animation-delay: 0.2s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(3) .post-card {
+            animation-delay: 0.3s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(4) .post-card {
+            animation-delay: 0.4s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(5) .post-card {
+            animation-delay: 0.5s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(6) .post-card {
+            animation-delay: 0.6s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(7) .post-card {
+            animation-delay: 0.7s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(8) .post-card {
+            animation-delay: 0.8s;
+        }
+
+        .row.g-3 .col-md-4:nth-child(9) .post-card {
+            animation-delay: 0.9s;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: 0.4s ease-in-out;
+            border-radius: 15px;
+        }
+
+        .post-card:hover img {
+            transform: scale(1.08);
+            filter: brightness(55%);
+        }
+
+        .post-info {
+            position: absolute;
+            bottom: 12px;
+            left: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            opacity: 0;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+            transition: 0.3s;
+        }
+
+        .post-card:hover .post-info {
+            opacity: 1;
+        }
+
+        /* Modal */
+        .modal-custom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+            padding: 60px 20px 20px 20px;
+            animation: fadeInModal 0.3s ease-in-out;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content-custom {
+            background: #fff;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 1100px;
+            padding: 30px;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-40px);
+            opacity: 0;
+            animation: slideDownModal 0.4s forwards;
+        }
+
+        @keyframes slideDownModal {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #0A2647;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: #FF4C4C;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #FF0000;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .modal-left {
+            flex: 2;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-left img {
+            width: 100%;
+            border-radius: 12px;
+            max-height: 400px;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-left p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .modal-right {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .modal-right::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-right::-webkit-scrollbar-thumb {
+            background-color: #0A2647;
+            border-radius: 5px;
+        }
+
+        .modal-right h5 {
+            margin-top: 0;
+            font-size: 17px;
+            color: #0A2647;
+        }
+
+        .user-report {
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            background: #f7f9fc;
+            font-size: 14px;
+            transition: 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .user-report.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .user-report:hover {
+            background: #e8f0fe;
+        }
+    </style>
+</head>
+
+<body>
+    
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>RashtraSetu</h3>
+  <a href="home.html" class="menu-item"><i class="fa-solid fa-house"></i>Home</a>
+  <a href="search.html" class="menu-item"><i class="fa-solid fa-search"></i>Search</a>
+  <a href="explore.html" class="menu-item"><i class="fa-solid fa-compass"></i>Explore</a>
+  <a href="add-issue.html" class="menu-item"><i class="fa-solid fa-plus-circle"></i>Add Issues</a>
+  <a href="janadicar-final.html" class="menu-item"><i class="fa-solid fa-gavel"></i>Janadhikar</a>
+  <a href="about_our_leaders.html" class="menu-item"><i class="fa-solid fa-users"></i>About Our Leaders</a>
+  <a href="politician_property.html" class="menu-item"><i class="fa-solid fa-user-tie"></i>Politician Properties</a>
+  <a href="updates.html" class="menu-item"><i class="fa-solid fa-bell"></i>Updates</a>
+  <a href="profile.html" class="menu-item"><i class="fa-solid fa-user"></i>Profile</a>
+  <a href="#" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+    <div class="content">
+        <h4 class="fw-bold mb-3">Explore 🔍</h4>
+        <p class="text-muted mb-4">Trending issues posted by citizens in our community.</p>
+        <div class="row g-3">
+
+            <!-- Card 1 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Water Crisis - Pune','water_crisis.jpg','Ongoing','Pune City','Since March 2025',
+                'The water crisis in Pune has reached alarming levels, affecting daily life across the city. Reservoirs and lakes have dropped to critically low levels due to delayed monsoons, over-extraction, and rising population demands. Many households receive water only at specific times, forcing families to queue for hours at public taps or ration limited supplies. Businesses face operational disruptions, particularly in industries dependent on consistent water access, and schools are compelled to adjust schedules or limit activities. Health hazards are increasing as residents rely on unsafe water from contaminated sources, borewells, and temporary storage tanks. The financial burden has shifted to households who purchase water from private vendors at high costs, disproportionately affecting low-income families.Municipal interventions such as tanker distributions are irregular, and many complaints go unresolved. Community-led initiatives including water-sharing programs, NGO distributions, and petitions are ongoing but insufficient to address the growing demand.',
+                ['User1: Water supply erratic',
+'User2: Elderly cannot collect water easily',
+'User3: Municipal tankers delayed frequently',
+'User4: Children miss school due to no water at home',
+'User5: Community water tanks insufficient',
+'User6: Many residents suffer health issues from unsafe water',
+'User7: Buying water privately is expensive',
+'User8: Local shops temporarily closed due to shortage',
+'User9: Residents demand long-term water management solutions',
+'User10: NGO water distributions help but not enough',
+'User11: Some areas get water only once in 3 days',
+'User12: Water pressure is extremely low',
+'User13: Households forced to store unsafe water',
+'User14: Municipal complaints often go unanswered',
+'User15: Queues at public taps stretch for hours',
+'User16: Schools adjusting schedules due to shortage',
+'User17: Businesses face operational disruptions',
+'User18: Water rationing not communicated properly',
+'User19: Community wells drying up rapidly',
+'User20: Citizens organizing petitions for immediate relief']
+            )">
+                    <img src="water_crisis.jpg">
+                    <div class="post-info">Water Crisis - Pune</div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Garbage Issue - Mumbai','garbage.jpg','Pending','Mumbai City','Since January 2025',
+                'Mumbai streets are heavily burdened with garbage due to irregular municipal collection, lack of proper waste segregation, and general public negligence. Overflowing bins block footpaths, roads, and drainage systems, which worsens during the monsoon season causing waterlogging and increasing the risk of diseases like dengue, malaria, and cholera. Foul odors from decomposing waste permeate neighborhoods, attracting rats, stray dogs, and other pests. Residents face daily inconveniences, children risk exposure to unhygienic conditions, and businesses suffer from customer complaints and loss of trade. Community-led initiatives like cleanup drives are happening, but they are sporadic and insufficient. The municipal authorities are often slow to respond, and the lack of proper infrastructure and manpower exacerbates the problem. Long-term solutions including efficient waste collection, strict enforcement of anti-littering regulations, public awareness campaigns, regular monitoring, and waste-to-energy initiatives are urgently needed to restore hygiene, public health, and overall quality of life in the city.',
+                ['UserA: Garbage piling up on streets for days',
+'UserB: Overflowing bins attracting mosquitoes',
+'UserC: School paths blocked, children face trouble',
+'UserD: Shops complain about customer complaints',
+'UserE: Municipal pickup requests ignored',
+'UserF: Community volunteers doing weekend cleanups',
+'UserG: Garbage trucks often skip certain areas',
+'UserH: Foul odor spreading in residential areas',
+'UserI: Stray animals rummaging through waste',
+'UserJ: Health hazards increasing for kids and elderly',
+'UserK: Residents forced to burn trash, causing smoke',
+'UserL: Traffic slowed due to garbage heaps on roads',
+'UserM: Requests for bins not fulfilled by authorities',
+'UserN: No proper segregation of recyclable and non-recyclable waste',
+'UserO: Risk of diseases rising due to unhygienic conditions',
+'UserP: Cleaning drives insufficient and temporary',
+'UserQ: People dumping garbage in open drains',
+'UserR: Sewage mixes with garbage in low-lying areas',
+'UserS: Residents demanding strict municipal action',
+'UserT: Waste management system needs urgent overhaul']
+            )">
+                    <img src="garbage.jpg">
+                    <div class="post-info">Garbage Issue - Mumbai</div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Damaged Roads - Nashik','Damage-Roads.jpg','Ongoing','Nashik City','Since February 2025',
+                'Many roads in Nashik are severely damaged, with potholes, cracks, and uneven surfaces widespread across the city. This has caused frequent traffic jams, vehicle damage, and a rise in road accidents. Commuters experience long delays during peak hours, while public transport like buses and taxis are often delayed or rerouted. Pedestrians face hazards while crossing streets, and cyclists are at constant risk of falls. Emergency vehicles struggle to navigate these damaged routes, delaying critical response times. Local authorities have been slow to repair the roads, and temporary patchwork fixes are often ineffective. Residents and businesses are frustrated, demanding immediate road maintenance, proper traffic management, and long-term infrastructure improvement plans to ensure safety and mobility in the city.',
+                [
+'User1: Potholes everywhere',
+'User2: Traffic jams',
+'User3: Bus delays',
+'User4: Pedestrian safety at risk',
+'User5: Emergency vehicles delayed',
+'User6: Local residents frustrated',
+'User7: Road accidents rising',
+'User8: Authorities not responding promptly',
+'User9: Public transport affected',
+'User10: Commuting has become unsafe',
+'User11: Cyclists face frequent accidents',
+'User12: Water collects in potholes after rain',
+'User13: Schools complain of delayed buses',
+'User14: Delivery services disrupted',
+'User15: Request for urgent road repairs'
+]
+
+            )">
+                    <img src="Damage-Roads.jpg">
+                    <div class="post-info">Damaged Roads - Nashik</div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'No Street Lights - Nagpur','no_streetLight.jpg','Ongoing','Nagpur City','Since April 2025',
+                'Several streets in Nagpur are dark at night due to non-functional or missing streetlights. This lack of proper lighting has increased the risk of road accidents, theft, harassment, and other crimes. Residents feel unsafe walking after dark, and children returning from school or women commuting alone face higher security threats. Local authorities have been slow to repair or replace faulty lighting, leaving many areas in darkness for weeks. Community members have started installing temporary lights, but these are insufficient. Nighttime visibility issues also affect traffic flow, emergency services, and local businesses operating after dusk. Citizens are demanding urgent municipal action, better maintenance schedules, and public safety measures to address this critical issue.',
+                [
+'User1: Unsafe walking at night',
+'User2: Accidents increased',
+'User3: Citizens demand repair',
+'User4: Darkness causing harassment incidents',
+'User5: Areas completely unlit for weeks',
+'User6: Children afraid to go out in the evening',
+'User7: Elderly residents at risk of falls',
+'User8: Local police patrols insufficient',
+'User9: Streetlight maintenance requests ignored',
+'User10: Fear of theft and robbery increased',
+'User11: Some streets have never been lit properly',
+'User12: Residents installing temporary lights',
+'User13: Nighttime traffic accidents reported',
+'User14: Local businesses affected due to darkness',
+'User15: Safety concerns raised at town hall meetings'
+]
+
+            )">
+                    <img src="no_streetLight.jpg">
+                    <div class="post-info">No Street Lights - Nagpur</div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Hospital Issue - Kolhapur','hospital_issue.png','Ongoing','Kolhapur City','Since February 2025',
+                'Local hospitals in Kolhapur are struggling with a critical shortage of beds, medical staff, and essential supplies, which is severely impacting patient care. Emergency response times are significantly delayed, elective surgeries and routine treatments are postponed, and overcrowding in critical care units has become a major concern. Patients face long queues, insufficient attention from overworked staff, and delays in diagnostics and treatment. The shortage of medicines, equipment, and ambulances further worsens the situation. Vulnerable populations, including elderly and children, are at increased risk, and public trust in healthcare is declining. Immediate government intervention, efficient resource allocation, and temporary support from NGOs and volunteers are urgently needed to ensure adequate healthcare services',
+                ['User1: Long waiting times',
+'User2: Staff shortage',
+'User3: Emergency services delayed',
+'User4: Beds often unavailable',
+'User5: Pharmacy frequently out of stock',
+'User6: Ambulance response slow',
+'User7: Doctors overworked and unavailable',
+'User8: Patients facing delayed surgeries',
+'User9: Lack of medical equipment',
+'User10: Residents demand government action',
+'User11: Inadequate hygiene in wards',
+'User12: Overcrowded emergency room',
+'User13: Limited ICU beds',
+'User14: Diagnostic tests delayed',
+'User15: Poor communication with staff']
+            )">
+                    <img src="hospital_issue.png">
+                    <div class="post-info">Hospital Issue - Kolhapur</div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Women Safety - Aurangabad','women_safety.jpg','Ongoing','Aurangabad City','Since March 2025',
+                'Rising incidents of harassment and unsafe zones reported by citizens. Many streets and public areas in Aurangabad are poorly lit, especially during night hours, creating an unsafe environment for women and vulnerable groups. Reports include eve-teasing, harassment in public transport, and delayed police response. Citizens have noted insufficient patrolling, broken or non-functional CCTV cameras, and inadequate community awareness programs. Women often avoid traveling alone after dark, and local authorities have yet to implement effective safety measures. Public spaces like parks, bus stops, and market areas remain high-risk zones, highlighting an urgent need for improved infrastructure, vigilance, and rapid-response emergency services.',
+                ['User1: Roads submerged after heavy rain',
+'User2: Houses in low-lying areas flooded',
+'User3: Mosquitoes breeding everywhere',
+'User4: Waterborne diseases on the rise',
+'User5: Commuters facing severe delays',
+'User6: Drainage cleaning irregular and insufficient',
+'User7: Children unable to attend school',
+'User8: Local shops closed due to waterlogging',
+'User9: Residents demand urgent municipal action',
+'User10: Drain covers often blocked with garbage',
+'User11: Vehicles getting stuck in flooded streets',
+'User12: Street crossings hazardous',
+'User13: Sewage mixing with rainwater',
+'User14: Flooded streets causing traffic jams',
+'User15: Temporary sandbags ineffective',
+'User16: Residents filing repeated complaints without action']
+            )">
+                    <img src="women_safety.jpg">
+                    <div class="post-info">Women Safety - Aurangabad</div>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Drainage Problem - Pune','drainage.jpg','Ongoing','Pune City','Since May 2025',
+                'Poor drainage in Pune has led to frequent waterlogging during rains, affecting both residential and commercial areas. Streets and low-lying localities are often submerged, disrupting traffic and daily routines. Stagnant water causes mosquito breeding, increases the risk of waterborne diseases, and creates unsanitary conditions. Many households face property damage and health hazards, while emergency and municipal services struggle to reach affected areas. The lack of timely maintenance, blocked drains due to garbage, and insufficient municipal infrastructure exacerbate the problem, highlighting the urgent need for systematic drainage repairs and long-term urban planning.',
+                [
+'User1: Roads submerged after every rain.',
+'User2: Houses in low-lying areas get flooded.',
+'User3: Mosquitoes breeding everywhere due to stagnant water.',
+'User4: Drainage cleaning is irregular and inefficient.',
+'User5: Commuters face long delays during rains.',
+'User6: Children unable to go to school because streets are flooded.',
+'User7: Waterborne diseases increasing in my locality.',
+'User8: Garbage often clogs drains, worsening flooding.',
+'User9: Municipal authorities slow to respond to complaints.',
+'User10: Residents demand immediate infrastructure repair.',
+'User11: Emergency vehicles struggle to reach homes.',
+'User12: Some areas remain waterlogged for days.',
+'User13: Temporary sandbag solutions are not enough.',
+'User14: Traffic congestion worsens due to blocked streets.',
+'User15: Citizens have started reporting through local apps, but action is delayed.'
+]
+
+            )">
+                    <img src="drainage.jpg">
+                    <div class="post-info">Drainage Problem - Pune</div>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Transportation Problem - Pune','transport_issue.jpg','Ongoing','Pune City','Since April 2025',
+                'Public transportation in Pune faces chronic delays, overcrowding, and operational inefficiencies that disrupt daily commuting. Buses and trains frequently arrive late or are overfilled, forcing passengers to wait for long periods or travel in unsafe, cramped conditions. Major roads and intersections experience severe traffic congestion, worsening travel times for private vehicles, public transport, and emergency services. Poor route planning, lack of dedicated lanes for buses, insufficient stops, and inadequate last-mile connectivity make commuting stressful and unreliable. Students and workers often reach schools or offices late, deliveries are delayed, and residents incur extra costs due to fuel and alternative transport. Safety concerns are rising, with accidents, impatient drivers, and crowded vehicles posing hazards. Environmental impacts also emerge from increased fuel consumption and vehicle emissions. Citizens demand comprehensive traffic management, expansion of public transport networks, increased vehicle frequency, better route planning, real-time tracking, and safe, reliable commuting options for everyone.',
+                [
+'User1: Bus delays increasing during peak hours.',
+'User2: Trains overcrowded, uncomfortable travel.',
+'User3: Traffic jams everywhere, wasting time.',
+'User4: Commuters spending hours in transit daily.',
+'User5: Public transport not reliable on weekends.',
+'User6: Students arriving late to school due to delays.',
+'User7: Offices complain about consistent employee lateness.',
+'User8: Authorities need better planning for routes.',
+'User9: Safety issues reported during peak congestion.',
+'User10: Citizens frustrated with irregular schedules.',
+'User11: Bus stops often lack seating and shelters.',
+'User12: Some routes do not run after 8 PM.',
+'User13: Taxis and auto-rickshaws charge extra during congestion.',
+'User14: No proper traffic management at intersections.',
+'User15: App-based transport services delayed in certain zones.'
+]
+
+            )">
+                    <img src="transport_issue.jpg">
+                    <div class="post-info">Transportation Problem - Pune</div>
+                </div>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="col-md-4 col-sm-6">
+                <div class="post-card" onclick="openModal(
+                'Water Pollution - Pune','water_pollution.jpg','Ongoing','Pune City','Since March 2025',
+               'Rivers and lakes in Pune are facing severe pollution due to industrial effluents, untreated sewage, and chemical runoff from nearby factories. This contamination has led to deterioration in water quality, making it unsafe for human consumption, irrigation, and daily household use. Aquatic life is suffering; fish and other species are dying at alarming rates, disrupting the local ecosystem and fishermen’s livelihoods. Communities living near these water bodies are reporting health issues such as skin infections, gastrointestinal problems, and respiratory complications due to exposure. The polluted water has also affected agriculture, with crops irrigated using contaminated water showing stunted growth and reduced yield. Residents are raising concerns over foul odors, foam accumulation, and visible waste in rivers and lakes. Despite NGOs and community-led cleanup efforts, the problem persists due to insufficient regulation and lack of enforcement of environmental protection laws. Immediate government intervention and sustainable waste management strategies are critical to prevent further ecological and public health crises.',
+                [
+'User1: Fish deaths in river',
+'User2: Foul smell near water bodies',
+'User3: Residents complain of illness after using river water',
+'User4: Children cannot play near contaminated water',
+'User5: Industrial discharge is unchecked',
+'User6: Community awareness campaigns ongoing',
+'User7: Authorities are slow to respond',
+'User8: NGOs trying cleanup drives',
+'User9: Water testing is insufficient',
+'User10: Immediate government intervention needed',
+'User11: Local fishermen losing livelihood',
+'User12: Algae and foam forming on surface',
+'User13: Drinking water from wells affected',
+'User14: Aquatic birds and animals seen sick',
+'User15: Residents demand strict pollution control'
+]
+
+            )">
+                    <img src="water_pollution.jpg">
+                    <div class="post-info">Water Pollution - Pune</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-custom" id="issueModal">
+        <div class="modal-content-custom">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-left">
+                    <img id="modalImage" src="">
+                    <h5>Description:</h5>
+                    <p id="modalDescription"></p>
+                    <h5>Status: <span id="modalStatus"></span></h5>
+                    <h5>Area: <span id="modalArea"></span></h5>
+                    <h5>Time Period: <span id="modalTime"></span></h5>
+                </div>
+                <div class="modal-right">
+                    <h5>User Reports:</h5>
+                    <div id="modalUserReports"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, image, status, area, time, description, userReports) {
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalImage").src = image;
+            document.getElementById("modalStatus").innerText = status;
+            document.getElementById("modalArea").innerText = area;
+            document.getElementById("modalTime").innerText = time;
+            document.getElementById("modalDescription").innerText = description;
+
+            const userReportsDiv = document.getElementById("modalUserReports");
+            userReportsDiv.innerHTML = "";
+
+            userReports.forEach((r, index) => {
+                let div = document.createElement("div");
+                div.className = "user-report";
+                div.innerText = r;
+                userReportsDiv.appendChild(div);
+                setTimeout(() => { div.classList.add("show"); }, index * 150);
+            });
+
+            document.getElementById("issueModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("issueModal").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>

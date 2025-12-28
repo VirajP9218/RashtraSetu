@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Janadikar — Rights Hub (Redesign)</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-QfFv2nM/sf0Q5vX/..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    :root{ --navy:#07223a; --saffron:#f09d2c; --green:#0b7a53; --muted:#6c757d; --bg:#f7fbfc; }
+    body{ font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; background:var(--bg); color:#072233; margin-left:230px; }
+
+    /* Sidebar */
+    .sidebar {
+        width: 230px;
+        height: 100vh;
+        background: #0A2647;
+        color: #fff;
+        padding-top: 20px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        overflow-y: auto;
+        z-index:1050;
+    }
+    .sidebar h3 { font-size: 22px; text-align: center; margin-bottom: 25px; color: #FFDE59; }
+    .menu-item { padding: 12px 20px; display: flex; align-items: center; font-size: 16px; text-decoration: none; color: white; margin-bottom:4px; border-radius:6px; transition:0.2s; }
+    .menu-item i { margin-right: 10px; }
+    .menu-item:hover, .menu-item.active { background: #144272; }
+
+    /* Header/nav */
+    .navbar-custom{ background: linear-gradient(90deg,var(--navy),#0d4b6b); }
+    .brand-title{ color:#fff; font-weight:700; }
+
+    /* Watermark */
+    .watermark{ position:fixed; pointer-events:none; opacity:0.06; width:360px; height:360px; z-index:0; }
+    .wm-left{ left:-120px; top:-40px; transform:rotate(-8deg); }
+    .wm-right{ right:-140px; top:40vh; transform:rotate(12deg) scale(.95); }
+
+    /* Hero */
+    header.hero{ padding:2.8rem 0; z-index:1; position:relative; }
+    .hero-card{ background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.92)); border-radius:14px; padding:1.4rem; box-shadow:0 10px 28px rgba(8,40,60,0.06); border-left:6px solid var(--saffron); }
+
+    /* Table/cells/cards */
+    .card-section{ border-radius:12px; transition:transform .14s, box-shadow .14s; }
+    .card-section:hover{ transform:translateY(-6px); box-shadow:0 12px 28px rgba(11,52,86,0.06); }
+    table#rightsTable tbody tr{ cursor:pointer; }
+    table#rightsTable tbody tr:hover{ background:rgba(11,52,86,0.03); }
+
+    .badge-articles{ background:linear-gradient(90deg,var(--saffron),#e68b1a); color:#fff; border-radius:12px; padding:.25rem .6rem; font-weight:600; }
+
+    footer.footer{ background:linear-gradient(90deg, rgba(7,34,58,0.95), rgba(6,43,70,0.95)); color:#dbeef8; padding:1rem 0; }
+
+    /* Accessibility focus */
+    a:focus,button:focus,tr:focus{ outline:3px solid rgba(11,52,86,0.12); outline-offset:2px; }
+
+    @media (max-width:768px){ 
+        .watermark{ display:none; } 
+        body{margin-left:0;} 
+        .sidebar{position:relative;width:100%;height:auto;}
+    }
+  </style>
+</head>
+<body>
+
+ <!-- SIDEBAR -->
+<div class="sidebar">
+  <h3>RashtraSetu</h3>
+  <a href="home.html" class="menu-item"><i class="fa-solid fa-house"></i>Home</a>
+  <a href="search.html" class="menu-item"><i class="fa-solid fa-search"></i>Search</a>
+  <a href="explore.html" class="menu-item"><i class="fa-solid fa-compass"></i>Explore</a>
+  <a href="add-issue.html" class="menu-item"><i class="fa-solid fa-plus-circle"></i>Add Issues</a>
+  <a href="janadicar-final.html" class="menu-item"><i class="fa-solid fa-gavel"></i>Janadhikar</a>
+  <a href="about_our_leaders.html" class="menu-item"><i class="fa-solid fa-users"></i>About Our Leaders</a>
+  <a href="politician_property.html" class="menu-item"><i class="fa-solid fa-user-tie"></i>Politician Properties</a>
+  <a href="updates.html" class="menu-item"><i class="fa-solid fa-bell"></i>Updates</a>
+  <a href="profile.html" class="menu-item"><i class="fa-solid fa-user"></i>Profile</a>
+  <a href="#" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+
+  <!-- Watermarks -->
+  <svg class="watermark wm-left" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><linearGradient id="gA" x1="0" x2="1"><stop offset="0" stop-color="#f09d2c"/><stop offset="1" stop-color="#0b7a53"/></linearGradient></defs>
+    <circle cx="60" cy="60" r="54" fill="url(#gA)"/>
+  </svg>
+
+  <svg class="watermark wm-right" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="60" cy="60" r="54" fill="#f5f5f5"/>
+  </svg>
+
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center text-decoration-none" href="#">
+        <svg width="56" height="56" viewBox="0 0 120 120" class="me-2"
+             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Janadikar logo">
+          <circle cx="60" cy="60" r="54" fill="#fff" stroke="#f09d2c" stroke-width="3"/>
+          <image href="national.png" x="30" y="30" width="60" height="60" preserveAspectRatio="xMidYMid slice" />
+        </svg>
+        <div>
+          <div class="brand-title">Janadikar</div>
+          <div class="text-white small">Know your rights — simply</div>
+        </div>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="filter:invert(1)"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+          <li class="nav-item"><a class="nav-link text-light" href="#fundamental-rights">Fundamental Rights</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#directive-principles">Directive Principles</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#duties">Duties</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#sections">Other Sections</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7">
+          <div class="hero-card">
+            <h1 class="h3 mb-2">Janadikar — Compact constitutional guide</h1>
+            <p class="mb-2 text-muted">Search articles, open details, and access quick guides — all in one page.</p>
+            <div class="d-flex gap-2 align-items-center">
+              <input id="globalSearch" class="form-control" placeholder="Search rights, articles or keywords..." aria-label="Search rights" />
+              <button class="btn btn-outline-primary" onclick="clearSearch()" title="Clear search"><i class="bi bi-x-circle"></i></button>
+              <button class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#introModal"><i class="bi bi-info-circle"></i> About</button>
+            </div>
+            <div class="mt-2 small text-muted">Tip: Press <kbd>Enter</kbd> in the search to focus first match. Use <kbd>Tab</kbd> to navigate results.</div>
+          </div>
+        </div>
+
+        <div class="col-lg-5 mt-3 mt-lg-0">
+          <div class="card p-3 card-section">
+            <div class="d-flex align-items-center">
+              <div class="me-3"><div class="badge-articles">Part III</div></div>
+              <div>
+                <strong>Fundamental Rights</strong>
+                <div class="small text-muted">Articles 12–35 | Justiciable</div>
+              </div>
+            </div>
+            <div class="mt-3 small text-muted">Quick links below — click any item to open a focused modal with sources and practical notes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN content -->
+  <main class="container my-5" id="maincontent">
+    <!-- MAIN -->
+  <main class="container my-5" id="maincontent">
+
+    <!-- Fundamental Rights -->
+    <section id="fundamental-rights" class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h2 class="h5 mb-0"><i class="bi bi-shield-lock-fill me-2" style="color:var(--saffron)"></i> Fundamental Rights</h2>
+          <div class="text-muted small">Part III — Articles 12–35</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-outline-secondary" onclick="openBatchModal('fundamental')"><i class="bi bi-list-check"></i> Summary</button>
+        </div>
+      </div>
+
+      <div class="table-responsive shadow-sm mb-2">
+        <table class="table table-hover align-middle" id="rightsTable" role="table" aria-label="Fundamental rights table">
+          <thead class="table-light">
+            <tr>
+              <th style="width:30%">Right / Group</th>
+              <th style="width:16%">Articles</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr tabindex="0" class="clickable-row" data-cat="fundamental" data-title="Right to Equality" data-articles="Art.14-18" data-full="Equality before the law; prohibition of discrimination on grounds such as religion, race, caste, sex and place of birth. Abolition of untouchability and titles." data-source="https://legislative.gov.in">
+              <td><strong>Right to Equality</strong></td>
+              <td>Art. 14–18</td>
+              <td>Equality before law; prohibition of discrimination; abolition of untouchability.</td>
+            </tr>
+
+            <tr tabindex="0" class="clickable-row" data-cat="fundamental" data-title="Right to Freedom" data-articles="Art.19-22" data-full="Includes freedoms of speech &amp; expression, peaceful assembly, association, movement, residence and profession. Also protections relating to arrest and detention (Art.21-22)." data-source="https://legislative.gov.in">
+              <td><strong>Right to Freedom</strong></td>
+              <td>Art. 19–22</td>
+              <td>Speech &amp; expression, assembly, movement; right to life &amp; liberty (Art.21).</td>
+            </tr>
+
+            <tr tabindex="0" class="clickable-row" data-cat="fundamental" data-title="Right against Exploitation" data-articles="Art.23-24" data-full="Prohibits trafficking, forced labour and child labour; legal framework for punishment and protection of vulnerable persons." data-source="https://legislative.gov.in">
+              <td><strong>Right against Exploitation</strong></td>
+              <td>Art. 23–24</td>
+              <td>Prohibits trafficking, forced labour and child labour.</td>
+            </tr>
+
+            <tr tabindex="0" class="clickable-row" data-cat="fundamental" data-title="Freedom of Religion" data-articles="Art.25-28" data-full="Freedom of conscience and free profession, practice and propagation of religion; subject to public order, morality and health." data-source="https://legislative.gov.in">
+              <td><strong>Freedom of Religion</strong></td>
+              <td>Art. 25–28</td>
+              <td>Freedom to practise and propagate religion subject to law.</td>
+            </tr>
+
+            <tr tabindex="0" class="clickable-row" data-cat="fundamental" data-title="Cultural & Educational Rights" data-articles="Art.29-30" data-full="Protection of interests of minorities to conserve language, script and culture; rights to establish &amp; administer educational institutions." data-source="https://legislative.gov.in">
+              <td><strong>Cultural &amp; Educational Rights</strong></td>
+              <td>Art. 29–30</td>
+              <td>Minority rights to conserve culture and administer schools.</td>
+            </tr>
+
+            <tr tabindex="0" class="clickable-row" data-cat="fundamental" data-title="Right to Constitutional Remedies" data-articles="Art.32" data-full="Right to move the Supreme Court for enforcement of fundamental rights; courts may issue writs like habeas corpus, mandamus, prohibition, certiorari and quo warranto." data-source="https://legislative.gov.in">
+              <td><strong>Right to Constitutional Remedies</strong></td>
+              <td>Art. 32</td>
+              <td>Right to approach the Supreme Court for enforcement of rights.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-end small text-muted">Source: Constitution of India (Part III). <a href="#" onclick="openSource('fund')" class="text-decoration-none">Open</a></div>
+    </section>
+
+    <!-- Directive Principles -->
+    <section id="directive-principles" class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h3 class="h5 mb-0"><i class="bi bi-people-fill me-2" style="color:var(--green)"></i> Directive Principles</h3>
+          <div class="text-muted small">Part IV — Articles 36–51 (policy guidelines)</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-outline-secondary" onclick="openBatchModal('dpsp')"><i class="bi bi-list-ul"></i> Summary</button>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div tabindex="0" class="card card-section h-100 p-3 dpsp-card" role="button" data-cat="dpsp" data-title="Social Welfare" data-articles="Art.38,39,41" data-full="Aim to secure a social order where social, economic and political justice informs institutions. Includes means of livelihood and state welfare responsibility." data-source="https://legislative.gov.in">
+            <h5 class="mb-1">Social Welfare</h5>
+            <div class="small text-muted">Art. 38, 39, 41</div>
+            <p class="mt-2 small text-muted mb-0">Promote social &amp; economic justice, welfare policies and public assistance.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div tabindex="0" class="card card-section h-100 p-3 dpsp-card" role="button" data-cat="dpsp" data-title="Justice &amp; Legal Reform" data-articles="Art.39A,50" data-full="Directive principles for equal justice, free legal aid and separation of judiciary from executive." data-source="https://legislative.gov.in">
+            <h5 class="mb-1">Justice &amp; Legal Reform</h5>
+            <div class="small text-muted">Art. 39A, 50</div>
+            <p class="mt-2 small text-muted mb-0">Equal justice and free legal aid; judiciary separation guidance.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div tabindex="0" class="card card-section h-100 p-3 dpsp-card" role="button" data-cat="dpsp" data-title="Education &amp; Health" data-articles="Art.45,47" data-full="Guides state to provide free and compulsory education for children and to improve nutrition and public health." data-source="https://legislative.gov.in">
+            <h5 class="mb-1">Education &amp; Health</h5>
+            <div class="small text-muted">Art. 45, 47</div>
+            <p class="mt-2 small text-muted mb-0">Focus on education access and public health standards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2 text-muted small">Source: Part IV (Directive Principles). <a href="#" onclick="openSource('dpsp')" class="text-decoration-none">Open</a></div>
+    </section>
+
+    <!-- Duties -->
+    <section id="duties" class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h3 class="h5 mb-0"><i class="bi bi-hand-thumbs-up-fill me-2"></i> Fundamental Duties</h3>
+          <div class="text-muted small">Part IVA — Article 51A</div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-outline-secondary" onclick="openBatchModal('duties')"><i class="bi bi-clipboard-check"></i> View Duties</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="list-group shadow-sm">
+            <li class="list-group-item" tabindex="0" role="button" data-cat="duties" data-title="Abide by the Constitution" data-articles="Art.51A(a)" data-full="To abide by the Constitution and respect its ideals, the National Flag and the National Anthem.">To abide by the Constitution and respect its ideals, the National Flag and the National Anthem.</li>
+            <li class="list-group-item" tabindex="0" role="button" data-cat="duties" data-title="Cherish national ideals" data-articles="Art.51A(b)" data-full="To cherish and follow the noble ideals which inspired the national struggle for freedom.">To cherish and follow the noble ideals which inspired the national struggle for freedom.</li>
+            <li class="list-group-item" tabindex="0" role="button" data-cat="duties" data-title="Protect sovereignty" data-articles="Art.51A(c)" data-full="To uphold and protect the sovereignty, unity and integrity of India.">To uphold and protect the sovereignty, unity and integrity of India.</li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="list-group shadow-sm">
+            <li class="list-group-item" tabindex="0" role="button" data-cat="duties" data-title="Value heritage" data-articles="Art.51A(f)" data-full="To value and preserve the rich heritage of our composite culture.">To value and preserve the rich heritage of our composite culture.</li>
+            <li class="list-group-item" tabindex="0" role="button" data-cat="duties" data-title="Protect environment" data-articles="Art.51A(g)" data-full="To protect and improve the natural environment including forests, lakes, rivers and wildlife.">To protect and improve the natural environment including forests, lakes, rivers and wildlife.</li>
+            <li class="list-group-item" tabindex="0" role="button" data-cat="duties" data-title="Strive for excellence" data-articles="Art.51A(k)" data-full="To strive towards excellence in all spheres of individual and collective activity.">To strive towards excellence in all spheres of individual and collective activity.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-2 text-muted small">Source: Article 51A. <a href="#" onclick="openSource('duties')" class="text-decoration-none">Open</a></div>
+    </section>
+
+    <!-- Other sections -->
+    <section id="sections" class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h3 class="h5 mb-0"><i class="bi bi-collection-fill me-2"></i> Other Civic / Legal Sections</h3>
+          <div class="text-muted small">Criminal, Civil, Consumer & Welfare overviews</div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div tabindex="0" class="card card-section h-100 p-3" role="button" data-cat="other" data-title="Criminal Justice Rights" data-articles="Art.20-22" data-full="Protections during arrest and trial: protection against double jeopardy and retrospective punishment (Art.20); right to life and personal liberty (Art.21); and rights relating to arrest and detention (Art.22).">
+            <h5>Criminal Justice Rights</h5>
+            <p class="small text-muted mb-0">Protections during arrest, trial and detention.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div tabindex="0" class="card card-section h-100 p-3" role="button" data-cat="other" data-title="Social Rights & Welfare" data-articles="DPSP" data-full="Rights and policies for education, health and social security reflected by DPSPs and welfare legislation, including labour protections and social schemes.">
+            <h5>Social Rights & Welfare</h5>
+            <p class="small text-muted mb-0">Education, health and labour welfare policies.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div tabindex="0" class="card card-section h-100 p-3" role="button" data-cat="other" data-title="Civil & Consumer Rights" data-articles="Consumer Protection" data-full="Contractual rights, property, consumer protection and access to civil courts for disputes. Includes consumer remedies and forums.">
+            <h5>Civil &amp; Consumer Rights</h5>
+            <p class="small text-muted mb-0">Everyday legal protections and dispute mechanisms.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Carousel -->
+    <section class="mb-5">
+      <h4 class="h6">Featured Guides</h4>
+      <div id="guideCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active p-4 bg-white rounded shadow-sm">
+            <h5>How to approach a Public Interest Litigation</h5>
+            <p class="mb-0 small text-muted">Identify locus standi, gather documents, prepare a clear prayer and consult an NGO or lawyer experienced with PILs.</p>
+          </div>
+          <div class="carousel-item p-4 bg-white rounded shadow-sm">
+            <h5>Filing an RTI</h5>
+            <p class="mb-0 small text-muted">Find the public authority, draft concise questions and follow the appeal timeline if needed.</p>
+          </div>
+          <div class="carousel-item p-4 bg-white rounded shadow-sm">
+            <h5>Accessing Legal Aid</h5>
+            <p class="mb-0 small text-muted">State Legal Services Authorities provide free legal aid to eligible persons — check district-level offices.</p>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#guideCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+        <button class="carousel-control-next" type="button" data-bs-target="#guideCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div>
+        <strong>Janadikar</strong> — A citizen resource.
+        <div class="small text-muted">Content for informational purposes only.</div>
+      </div>
+      <div class="text-end small">Sources: Constitution of India (Part III, IV, IV-A). <br><a href="#" class="text-decoration-none text-light" onclick="openSource('fund')">Official text</a></div>
+    </div>
+  </footer>
+
+
+  <!-- Modals -->
+  <!-- Detail modal -->
+  <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailModalLabel">Detail</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="detailArticles" class="mb-1 small text-muted"></p>
+          <h5 id="detailTitle"></h5>
+          <p id="detailFull" class="mb-0"></p>
+          <hr />
+          <div class="small text-muted">Source: <a href="#" id="detailSource" target="_blank">open</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intro modal -->
+  <div class="modal fade" id="introModal" tabindex="-1" aria-labelledby="introModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="introModalLabel">About Janadikar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-1">Janadikar is a compact, user-focused guide to constitutional rights, directive principles and duties. It is for informational purposes only and not legal advice.</p>
+          <p class="mb-0 small text-muted">Click any row, card, or duty to read more. Use the search to filter by keyword, article or title.</p>
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Batch modal (summary list) -->
+  <div class="modal fade" id="batchModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="batchModalLabel">Summary</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="batchList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Utility: fetch all interactive elements (rows, cards, list items)
+    const clickableSelectors = '.clickable-row, .card.card-section[role="button"], .list-group-item[role="button"]';
+    const interactiveNodes = () => Array.from(document.querySelectorAll(clickableSelectors));
+
+    // Open detail modal and populate
+    function openDetailFromElement(el){
+      const title = el.dataset.title || el.querySelector('h5')?.innerText || el.querySelector('strong')?.innerText || 'Detail';
+      const articles = el.dataset.articles || el.getAttribute('data-articles') || '';
+      const full = el.dataset.full || el.getAttribute('data-full') || (el.innerText || '');
+      const source = el.dataset.source || '#';
+      document.getElementById('detailTitle').innerText = title;
+      document.getElementById('detailArticles').innerText = articles;
+      document.getElementById('detailFull').innerText = full;
+      document.getElementById('detailSource').setAttribute('href', source);
+      const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+      modal.show();
+    }
+
+    // Attach click & keyboard handlers to interactive elements
+    function attachInteractivity(){
+      interactiveNodes().forEach(el => {
+        // prevent double-binding
+        if(el.dataset.bound === 'true') return;
+        el.dataset.bound = 'true';
+
+        el.addEventListener('click', (e)=>{ openDetailFromElement(el); });
+
+        // keyboard activation (Enter / Space)
+        el.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openDetailFromElement(el); }
+        });
+      });
+    }
+
+    // Search: filter rows/cards/list items
+    function performSearch(q){
+      q = (q||'').trim().toLowerCase();
+      const nodes = interactiveNodes();
+      let firstMatch = null;
+      nodes.forEach(el => {
+        const hay = ((el.dataset.title||'') + ' ' + (el.dataset.articles||'') + ' ' + (el.dataset.full||'') ).toLowerCase();
+        const visible = q === '' || hay.indexOf(q) !== -1;
+        el.style.display = visible ? '' : 'none';
+        if(visible && !firstMatch) firstMatch = el;
+      });
+      return firstMatch;
+    }
+
+    // Hook search input
+    const searchInput = document.getElementById('globalSearch');
+    searchInput.addEventListener('input', ()=>{ performSearch(searchInput.value); });
+    searchInput.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        const first = performSearch(searchInput.value);
+        if(first){ first.focus(); /* highlight briefly */ first.classList.add('border','border-2'); setTimeout(()=>first.classList.remove('border','border-2'),800); }
+      }
+    });
+
+    function clearSearch(){ searchInput.value=''; performSearch(''); searchInput.focus(); }
+
+    // Batch modal: list items of a category
+    function openBatchModal(cat){
+      const items = Array.from(document.querySelectorAll(clickableSelectors)).filter(el => (el.dataset.cat||'').toLowerCase() === cat.toLowerCase());
+      const list = document.getElementById('batchList'); list.innerHTML = '';
+      if(items.length === 0){ list.innerHTML = '<div class="text-muted">No items found for this category.</div>'; }
+      items.forEach(it => {
+        const wrapper = document.createElement('div'); wrapper.className = 'mb-3 p-3 bg-white rounded shadow-sm';
+        const t = document.createElement('div'); t.className = 'd-flex justify-content-between align-items-start';
+        const left = document.createElement('div'); left.innerHTML = `<strong>${it.dataset.title||it.innerText}</strong><div class='small text-muted'>${it.dataset.articles||''}</div>`;
+        const btn = document.createElement('button'); btn.className = 'btn btn-sm btn-outline-primary'; btn.innerHTML = '<i class="bi bi-eye"></i> Open';
+        btn.addEventListener('click', ()=>openDetailFromElement(it));
+        t.appendChild(left); t.appendChild(btn);
+        const p = document.createElement('div'); p.className = 'mt-2 small text-muted'; p.innerText = (it.dataset.full||'').slice(0,220) + ( (it.dataset.full||'').length>220 ? '...' : '' );
+        wrapper.appendChild(t); wrapper.appendChild(p);
+        list.appendChild(wrapper);
+      });
+      const bmodal = new bootstrap.Modal(document.getElementById('batchModal'));
+      bmodal.show();
+    }
+
+    // Open source (simple behaviour: show modal with source list or open link)
+    function openSource(which){
+      // For now we'll open the legislative site in a new tab for 'fund'
+      let url = 'https://legislative.gov.in/constitution-of-india';
+      if(which === 'duties') url = 'https://legislative.gov.in/constitution-of-india';
+      if(which === 'dpsp') url = 'https://legislative.gov.in/constitution-of-india';
+      window.open(url, '_blank');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', ()=>{
+      attachInteractivity();
+      performSearch('');
+    });
+  </script>
+</body>
+</html>
+
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Your original JS code for modals, search, batch modal, etc. -->
+  <script>
+    // ... exact same JavaScript you had before ...
+  </script>
+</body>
+</html>

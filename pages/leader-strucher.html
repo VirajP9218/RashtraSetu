@@ -1,0 +1,1113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RashtraSetu — Leaders Directory</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0b2a4a;
+      --accent: #0f559c;
+      --card-bg: #ffffff;
+      --muted: #6b7c93;
+    }
+
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf3ff 0%, #ffffff 100%);
+      color: #122433;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      height: 100vh;
+      background: #0d1b2a;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 25px;
+      overflow-y: auto;
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      color: #FFDE59;
+      margin-bottom: 25px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .menu-item {
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 2px 10px;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .menu-item i {
+      margin-right: 10px;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: #144272;
+    }
+
+    /* Content */
+    .content {
+      margin-left: 260px;
+      padding: 2rem;
+    }
+
+    /* Header */
+    .header-bar {
+      background: #0a1a3f;
+      color: white;
+      padding: 15px 0;
+      border-radius: 0 0 20px 20px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Switch buttons */
+    .switch-btns .btn {
+      background: #e2e8f0;
+      color: #0f172a;
+      font-weight: bold;
+      border-radius: 30px;
+      padding: 10px 30px;
+      margin: 5px;
+      border: none;
+    }
+
+    .switch-btns .active {
+      background: #0a1a3f !important;
+      color: white !important;
+    }
+
+    /* Section Boxes */
+    .section-box {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .section-box.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Leader Cards */
+    .leader-card {
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--card-bg), #fbfdff);
+      padding: 1.2rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      min-height: 140px;
+      box-shadow: 0 10px 26px rgba(11, 42, 74, 0.08);
+      border: 1px solid rgba(11, 42, 74, 0.06);
+      margin-bottom: 1rem;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--navy), var(--accent));
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+      object-fit: cover;
+      box-shadow: 0 8px 22px rgba(15, 85, 156, 0.18);
+    }
+
+    .leader-content {
+      flex: 1;
+    }
+
+    .leader-title {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 1.15rem;
+    }
+
+    .leader-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .small-muted {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .btn-knowmore {
+      background: linear-gradient(180deg, var(--accent), var(--navy));
+      border: none;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 16px rgba(11, 42, 74, 0.18);
+    }
+
+    @media (max-width:720px) {
+      .content {
+        margin-left: 0;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .avatar {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+
+    /* Modal Styling - Compact */
+    .modal-content {
+      border-radius: 18px;
+      border: 3px solid var(--modal-outline);
+      overflow: hidden;
+      max-width: 500px;
+      /* Smaller modal */
+      margin: auto;
+    }
+
+    .modal-header {
+      background: var(--navy);
+      color: white;
+    }
+
+    .modal-body {
+      font-size: 1rem;
+      line-height: 1.6;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .modal-body img {
+      width: 80px;
+      /* smaller image */
+      height: 80px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid var(--accent);
+    }
+
+    .modal-footer {
+      background: #f5f7fa;
+      border-top: 1px solid rgba(11, 42, 74, 0.1);
+      justify-content: center;
+      /* center the close button */
+    }
+
+    @media (max-width:720px) {
+      .avatar {
+        min-width: 70px;
+        height: 70px;
+        font-size: 0.85rem;
+      }
+
+      body {
+        padding: 1rem;
+      }
+
+      .modal-body {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .modal-body img {
+        margin-bottom: 0.5rem;
+      }
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h3>RashtraSetu</h3>
+    <a href="home.html" class="menu-item active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="#" class="menu-item"><i class="fa-solid fa-search"></i>Search</a>
+    <a href="explore.html" class="menu-item"><i class="fa-solid fa-compass"></i>Explore</a>
+    <a href="#" class="menu-item"><i class="fa-solid fa-plus-circle"></i>Add Issues</a>
+    <a href="rights.html" class="menu-item"><i class="fa-solid fa-gavel"></i>Janadhikar</a>
+    <a href="about_our_leaders.html" class="menu-item"><i class="fa-solid fa-users"></i>About Our Leaders</a>
+    <a href="#" class="menu-item"><i class="fa-solid fa-user-tie"></i>Politician Properties</a>
+    <a href="update.html" class="menu-item"><i class="fa-solid fa-bell"></i>Updates</a>
+    <a href="profile.html" class="menu-item"><i class="fa-solid fa-user"></i>Profile</a>
+    <a href="#" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+
+    <div class="header-bar mb-4">
+      <h2>🏛️ Leadership Transparency Hub</h2>
+    </div>
+
+    <!-- Switch PCMC / PMC -->
+    <div class="text-center switch-btns mb-4">
+      <button class="btn active" id="btnPCMC">PCMC</button>
+      <button class="btn" id="btnPMC">PMC</button>
+    </div>
+
+    <!-- PCMC Section -->
+    <div id="pcmcSection" class="section-box active">
+
+      <ul class="nav nav-pills justify-content-center mb-4" id="pcmctabs" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pcmcSabhapati">Corporators</button>
+        </li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill"
+            data-bs-target="#pcmcCommissioners">Commissioners</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pcmcMayors">Mayors</button>
+        </li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pcmcMLA">MLAs</button>
+        </li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pcmcMP">MPs</button></li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- PCMC SECTION Sabhapati-->
+        <div class="tab-pane fade show active" id="pcmcSabhapati">
+          <section class="mb-4">
+            <h2 class="section-title">PCMC (Major Officers, Commissioners & Department Heads)</h2>
+            <span class="small-muted">District level and city-level roles</span>
+
+            <div class="row g-4 mt-3">
+
+              <!-- PCMC corporator 1 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/NitinLandge.png" alt="Shravan Hardikar" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati/ Chairman — Nitin Landge</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal1">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator Modal 1 -->
+              <div class="modal fade" id="pcmcSabhapatiModal1" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/NitinLandge.png" alt="Shravan Hardikar">
+                      <div>
+                        <h5>Nitin Landge</h5>
+                        <p><strong>Political Affiliation and Role:</strong> <br>He is a leader of the BJP (Bharatiya
+                          Janata
+                          Party).<br>
+                          He was the Chairman of the Standing Committee of the Pimpri-Chinchwad Municipal Corporation
+                          (PCMC).<br>
+                          He is a two-time corporator from the Bhosari area.<br>
+                          He is the son of former Pimpri-Chinchwad mayor Dnyaneshwar Landge.</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator 2 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/SantoshLondhe.png" alt="Santosh Londhe" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati / Chairman — Santosh Londhe</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal2">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC Modal 2 -->
+              <div class="modal fade" id="pcmcSabhapatiModal2" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/SantoshLondhe.png" alt="SantoshLondhe">
+                      <div>
+                        <h5>Santosh Londhe</h5>
+                        <p><strong>Position:</strong> Elected unopposed as the Standing Committee chief of the Pimpri
+                          Chinchwad Municipal Corporation (PCMC) in March 2020. </p>
+                        <p><strong>Political Role: </strong>Leader of the Bharatiya Janata Party (BJP). </p>
+                        <p>He is a corporator from the Bhosari Assembly segment in Pimpri Chinchwad.  One report
+                          suggests
+                          he lives in a small house in Vikhroli and was used by others who misused his documents
+                          (Aadhaar
+                          and PAN cards) to register the fraudulent company, an office of which did not exist at the
+                          registered address.</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--  PCMC corporator 3 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/MaheshLandge.png" alt="Mahesh Landge" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati/ Chairman— Mahesh Landge</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal3">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator Modal 3 -->
+              <div class="modal fade" id="pcmcSabhapatiModal3" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/MaheshLandge.png" alt="Shravan Hardikar">
+                      <div>
+                        <h5>Shravan Hardikar</h5>
+                        <p><strong>Role:</strong>Bharatiya Janata Party (BJP) since 2016.<br>  Member of the Maharashtra
+                          Legislative Assembly (MLA). 
+                          Constituency: Represents the Bhosari Vidhan Sabha constituency in the Pune district. </p>
+                        <p> He was a Corporator in the Pimpri Chinchwad Municipal Corporation (PCMC) for three
+                          consecutive terms (2004-2014). 
+                          In 2014, he won the Bhosari Assembly election as an Independent candidate and later joined the
+                          BJP. 
+                          He was re-elected as the BJP candidate in the 2019 and 2024 Maharashtra Legislative Assembly
+                          elections. </p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- PCMC corporator 4 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/JagdishShetty.png" alt="JagdishShetty" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati/ Chairman— Jagdish Shetty</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal4">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator Modal 4-->
+              <div class="modal fade" id="pcmcSabhapatiModal4" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/JagdishShetty.png" alt="Shravan Hardikar">
+                      <div>
+                        <h5>Jagdish Shetty</h5>
+                        <p><strong>Position:</strong> He is the General Secretary of the VHS (an organization, possibly
+                          Vishwa Hindu Sena/Parishad based on the context of the content he discusses, though not
+                          explicitly stated). </p>
+                        <p> Served as the 15th Chief Minister of Karnataka (2012–2013). 
+                          Served as the Speaker of the Karnataka Legislative Assembly (2008). </p>
+                        <p>
+                          Was a prominent leader of the Bharatiya Janata Party (BJP) in Karnataka for nearly three
+                          decades.Joined the Congress in April 2023 after being denied a ticket by the BJP for the
+                          Karnataka Assembly elections.</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="pcmcCommissioners">
+        <section class="mb-4">
+          <h2 class="section-title">PCMC (Major Officers, Commissioners & Department Heads)</h2>
+          <span class="small-muted">District level and city-level roles</span>
+
+          <div class="row g-4 mt-3">
+
+            <!-- PCMC corporator 1 -->
+            <div class="col-12">
+              <div class="leader-card rounded-right">
+                <div class="avatar">
+                  <img src="images/ShravanHardikar.png" alt="Shravan Hardikar" class="img-fluid rounded-circle">
+                </div>
+                <div class="leader-content">
+                  <div class="leader-title">Commissioner — Shravan Hardikar</div>
+                </div>
+                <div>
+                  <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcCommissionerModal1">
+                    <i class="fa-solid fa-circle-info me-1"></i> Know more
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PCMC corporator Modal 1 -->
+            <div class="modal fade" id="pcmcCommissionerModal1" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Leader Details</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <img src="images/ShravanHardikar.png" alt="Shravan Hardikar">
+                    <div>
+                      <h5>Shravan Hardikar</h5>
+                      <p><strong>Political Affiliation and Role:</strong> <br>Shravan Hardikar is the Municipal
+                        Commissioner of Pimpri-Chinchwad Municipal Corporation (PCMC), one of the largest and
+                        fastest-growing urban local bodies in Maharashtra. <br>
+                        He was the Chairman of the Standing Committee of the Pimpri-Chinchwad Municipal Corporation
+                        (PCMC).<br>
+                        n his role, he is responsible for overseeing the city’s civic administration, including urban
+                        planning, infrastructure development, sanitation, water supply, and public health services. <br>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PCMC corporator 2 -->
+            <div class="col-12">
+              <div class="leader-card rounded-right">
+                <div class="avatar">
+                  <img src="images/UlhasJagtap.png" alt="Santosh Londhe" class="img-fluid rounded-circle">
+                </div>
+                <div class="leader-content">
+                  <div class="leader-title">Commissioner — Ulhas Jagtap</div>
+                </div>
+                <div>
+                  <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcCommissionerModal2">
+                    <i class="fa-solid fa-circle-info me-1"></i> Know more
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PCMC Modal 2 -->
+            <div class="modal fade" id="pcmcCommissionerModal2" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Leader Details</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <img src="images/UlhasJagtap.png" alt="SantoshLondhe">
+                    <div>
+                      <h5>Ulhas Jagtap </h5>
+                      <p><strong>Position:</strong>Ulhas Jagtap is a senior administrative officer in the
+                        Pimpri-Chinchwad Municipal Corporation (PCMC), having served as Municipal Secretary and later
+                        appointed as the Third Additional Commissioner.</p>
+                      <p><strong>Political Role: </strong> In his role, he was responsible for overseeing various civic
+                        functions, including urban administration, public services, and citizen grievance redressal.</p>
+                      <p>He actively participated in initiatives such as public feedback sessions, infrastructure
+                        management, and skill-development programs, contributing to the smooth functioning of PCMC.</p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--  PCMC corporator 3 -->
+            <div class="col-12">
+              <div class="leader-card rounded-right">
+                <div class="avatar">
+                  <img src="images/PradeepPatil.png" alt="Mahesh Landge" class="img-fluid rounded-circle">
+                </div>
+                <div class="leader-content">
+                  <div class="leader-title">Commissioners - Pradeep Patil </div>
+                </div>
+                <div>
+                  <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcCommissionerModal3">
+                    <i class="fa-solid fa-circle-info me-1"></i> Know more
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PCMC corporator Modal 3 -->
+            <div class="modal fade" id="pcmcCommissionerModal3" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Leader Details</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <img src="images/PradeepPatil.png" alt="Shravan Hardikar">
+                    <div>
+                      <h5>Pradeep Jambhale Patil</h5>
+                      <p><strong>Role:</strong>Pradeep Jambhale Patil served as an Additional Commissioner of the
+                        Pimpri-Chinchwad Municipal Corporation (PCMC), where he oversaw key civic functions including
+                        urban administration, infrastructure maintenance, and enforcement drives against illegal
+                        constructions and water connections.
+                        Constituency: Represents the Bhosari Vidhan Sabha constituency in the Pune district. </p>
+                      <p> During his tenure, he supervised eviction operations that cleared large areas of unauthorized
+                        structures, coordinated public service initiatives such as road maintenance and tree plantation
+                        drives, and engaged with citizens through programs like student-oriented awareness sessions </p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- PCMC corporator 4 -->
+            <div class="col-12">
+              <div class="leader-card rounded-right">
+                <div class="avatar">
+                  <img src="images/JitendraWagh.png" alt="JagdishShetty" class="img-fluid rounded-circle">
+                </div>
+                <div class="leader-content">
+                  <div class="leader-title">Commissioner — Jitendra Wagh</div>
+                </div>
+                <div>
+                  <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcCommissionerModal4">
+                    <i class="fa-solid fa-circle-info me-1"></i> Know more
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PCMC corporator Modal 4-->
+            <div class="modal fade" id="pcmcCommissionerModal4" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Leader Details</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <img src="images/JitendraWagh.png" alt="Shravan Hardikar">
+                    <div>
+                      <h5>Jitendra Wagh</h5>
+                      <p><strong>Position:</strong> Jitendra Wagh served as an Additional Commissioner (Additional
+                        Commissioner‑2) of the Pimpri-Chinchwad Municipal Corporation (PCMC) from September 2021 to July
+                        2023, on deputation from his previous role with the Pune Metro project. </p>
+                      <p> During his tenure, he oversaw multiple administrative and civic functions, including
+                        enforcement drives against illegal structures and hoardings, as well as initiatives to promote
+                        environmental sustainability. </p>
+                      <p>e played a key role in conceptualizing and launching PCMC’s “Sustainability Cell,” aimed at
+                        guiding long-term sustainable development under the City Strategy Plan 2030.</p>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="pcmcMayors">
+      <!-- Mayor cards here -->
+    </div>
+
+    <div class="tab-pane fade" id="pcmcMLA">
+      <section class="mb-4">
+        <h2 class="section-title">PCMC (Major Officers, Commissioners & Department Heads)</h2>
+        <span class="small-muted">District level and city-level roles</span>
+
+        <div class="row g-4 mt-3">
+
+          <!-- PCMC corporator 1 -->
+          <div class="col-12">
+            <div class="leader-card rounded-right">
+              <div class="avatar">
+                <img src="images/ShankarJagatp.png" alt="ShankarJagatp" class="img-fluid rounded-circle">
+              </div>
+              <div class="leader-content">
+                <div class="leader-title">MLA ( Member of Legislative Assembly)— Shankar Jagatp</div>
+              </div>
+              <div>
+                <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcMLAModal1">
+                  <i class="fa-solid fa-circle-info me-1"></i> Know more
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PCMC corporator Modal 1 -->
+          <div class="modal fade" id="pcmcMLAModal1" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Leader Details</h5>
+                  <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <img src="images/ShankarJagatp.png" alt="Shravan Hardikar">
+                  <div>
+                    <h5>Nitin Landge</h5>
+                    <p><strong>Political Affiliation and Role:</strong> <br>Shankar Pandurang Jagtap is a Bharatiya
+                      Janata Party (BJP) politician and the current Member of the Maharashtra Legislative Assembly (MLA)
+                      representing the Chinchwad constituency. <br>
+                      He was the Chairman of the Standing Committee of the Pimpri-Chinchwad Municipal Corporation
+                      (PCMC).<br>
+                      He won the 2024 assembly election with a margin of over 1 lakh votes. A post-graduate by
+                      education, he is involved in agriculture and business, with declared assets of around ₹91 crore.
+                      <br></p>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+    </div>
+    <div class="tab-pane fade" id="pcmcMPs">
+      <!-- MP cards here -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- PMC Section -->
+    <div id="pmcSection" class="section-box">
+      <ul class="nav nav-pills justify-content-center mb-4" id="pmctabs" role="tablist">
+        <li class="nav-item">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill"
+            data-bs-target="#pmcSabhapati">Corporators</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill"
+            data-bs-target="#pmCommissioner">Commissioners</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pmcMayor">Mayors</button>
+        </li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pmcMLA">MLAs</button>
+        </li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pmcMP">MPs</button>
+        </li>
+      </ul>
+
+      <!-- Tab content -->
+      <div class="tab-content">
+        <!-- PMC SECTION Sabhapati-->
+        <div class="tab-pane fade show active" id="pmcSabhapati">
+          <section class="mb-4">
+            <h2 class="section-title">PCMC (Major Officers, Commissioners & Department Heads)</h2>
+            <span class="small-muted">District level and city-level roles</span>
+
+
+            <div class="row g-4 mt-3">
+
+              <!-- PCMC corporator 1 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/NitinLandge.png" alt="Shravan Hardikar" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati/ Chairman — Nitin Landge</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal1">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator Modal 1 -->
+              <div class="modal fade" id="pcmcSabhapatiModal1" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/NitinLandge.png" alt="Shravan Hardikar">
+                      <div>
+                        <h5>Nitin Landge</h5>
+                        <p><strong>Political Affiliation and Role:</strong> <br>He is a leader of the BJP (Bharatiya
+                          Janata
+                          Party).<br>
+                          He was the Chairman of the Standing Committee of the Pimpri-Chinchwad Municipal Corporation
+                          (PCMC).<br>
+                          He is a two-time corporator from the Bhosari area.<br>
+                          He is the son of former Pimpri-Chinchwad mayor Dnyaneshwar Landge.</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator 2 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/SantoshLondhe.png" alt="Santosh Londhe" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati / Chairman — Santosh Londhe</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal2">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC Modal 2 -->
+              <div class="modal fade" id="pcmcSabhapatiModal2" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/SantoshLondhe.png" alt="SantoshLondhe">
+                      <div>
+                        <h5>Santosh Londhe</h5>
+                        <p><strong>Position:</strong> Elected unopposed as the Standing Committee chief of the Pimpri
+                          Chinchwad Municipal Corporation (PCMC) in March 2020. </p>
+                        <p><strong>Political Role: </strong>Leader of the Bharatiya Janata Party (BJP). </p>
+                        <p>He is a corporator from the Bhosari Assembly segment in Pimpri Chinchwad.  One report
+                          suggests
+                          he lives in a small house in Vikhroli and was used by others who misused his documents
+                          (Aadhaar
+                          and PAN cards) to register the fraudulent company, an office of which did not exist at the
+                          registered address.</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--  PCMC corporator 3 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/MaheshLandge.png" alt="Mahesh Landge" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati/ Chairman— Mahesh Landge</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal3">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator Modal 3 -->
+              <div class="modal fade" id="pcmcSabhapatiModal3" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/MaheshLandge.png" alt="Shravan Hardikar">
+                      <div>
+                        <h5>Shravan Hardikar</h5>
+                        <p><strong>Role:</strong>Bharatiya Janata Party (BJP) since 2016.<br>  Member of the Maharashtra
+                          Legislative Assembly (MLA). 
+                          Constituency: Represents the Bhosari Vidhan Sabha constituency in the Pune district. </p>
+                        <p> He was a Corporator in the Pimpri Chinchwad Municipal Corporation (PCMC) for three
+                          consecutive terms (2004-2014). 
+                          In 2014, he won the Bhosari Assembly election as an Independent candidate and later joined the
+                          BJP. 
+                          He was re-elected as the BJP candidate in the 2019 and 2024 Maharashtra Legislative Assembly
+                          elections. </p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- PCMC corporator 4 -->
+              <div class="col-12">
+                <div class="leader-card rounded-right">
+                  <div class="avatar">
+                    <img src="images/JagdishShetty.png" alt="JagdishShetty" class="img-fluid rounded-circle">
+                  </div>
+                  <div class="leader-content">
+                    <div class="leader-title">Sabhapati/ Chairman— Jagdish Shetty</div>
+                  </div>
+                  <div>
+                    <button class="btn btn-knowmore" data-bs-toggle="modal" data-bs-target="#pcmcSabhapatiModal4">
+                      <i class="fa-solid fa-circle-info me-1"></i> Know more
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PCMC corporator Modal 4-->
+              <div class="modal fade" id="pcmcSabhapatiModal4" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Leader Details</h5>
+                      <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img src="images/JagdishShetty.png" alt="Shravan Hardikar">
+                      <div>
+                        <h5>Jagdish Shetty</h5>
+                        <p><strong>Position:</strong> He is the General Secretary of the VHS (an organization, possibly
+                          Vishwa Hindu Sena/Parishad based on the context of the content he discusses, though not
+                          explicitly stated). </p>
+                        <p> Served as the 15th Chief Minister of Karnataka (2012–2013). 
+                          Served as the Speaker of the Karnataka Legislative Assembly (2008). </p>
+                        <p>
+                          Was a prominent leader of the Bharatiya Janata Party (BJP) in Karnataka for nearly three
+                          decades.Joined the Congress in April 2023 after being denied a ticket by the BJP for the
+                          Karnataka Assembly elections.</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+
+        </div>
+        </section>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="tab-pane fade" id="pmcCommissioner">
+    <!-- Commissioner cards here -->
+  </div>
+
+  <div class="tab-pane fade" id="pmcMayor">
+    <!-- Mayor cards here -->
+  </div>
+
+  <div class="tab-pane fade" id="pmcMLA">
+    <!-- MLA cards here -->
+  </div>
+
+  <div class="tab-pane fade" id="pmcMP">
+    <!-- MP cards here -->
+  </div>
+
+
+
+
+
+  <!-- Unified Leader Modal
+  <div class="modal fade" id="leaderModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background:var(--navy); color:white;">
+          <h5 class="modal-title" id="modalName"></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body d-flex flex-column align-items-center text-center">
+          <img id="modalPhoto" src="" alt="Leader Photo"
+            style="width:140px; height:140px; border-radius:12px; object-fit:cover; margin-bottom:15px; box-shadow:0 6px 18px rgba(11,42,74,0.15);">
+          <p><strong>Role:</strong> <span id="modalRole"></span></p>
+          <p><strong>Area:</strong> <span id="modalArea"></span></p>
+          <p class="mt-3" id="modalInfo"></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Switch PCMC / PMC
+    const btnPCMC = document.getElementById('btnPCMC');
+    const btnPMC = document.getElementById('btnPMC');
+    const pcmcSection = document.getElementById('pcmcSection');
+    const pmcSection = document.getElementById('pmcSection');
+
+    btnPCMC.addEventListener('click', () => {
+      btnPCMC.classList.add('active');
+      btnPMC.classList.remove('active');
+      pcmcSection.classList.add('active');
+      pmcSection.classList.remove('active');
+    });
+
+    btnPMC.addEventListener('click', () => {
+      btnPMC.classList.add('active');
+      btnPCMC.classList.remove('active');
+      pmcSection.classList.add('active');
+      pcmcSection.classList.remove('active');
+    });
+
+    // Modal Dynamic Population
+    const leaderModal = document.getElementById('leaderModal');
+    leaderModal.addEventListener('show.bs.modal', function (event) {
+      const btn = event.relatedTarget;
+      document.getElementById('modalName').textContent = btn.getAttribute('data-name');
+      document.getElementById('modalRole').textContent = btn.getAttribute('data-role');
+      document.getElementById('modalArea').textContent = btn.getAttribute('data-area');
+      document.getElementById('modalInfo').textContent = btn.getAttribute('data-info');
+      document.getElementById('modalPhoto').src = btn.getAttribute('data-photo');
+    });
+  </script>
+
+</body>
+
+</html>
